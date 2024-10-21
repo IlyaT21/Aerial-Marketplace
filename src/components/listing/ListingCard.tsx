@@ -18,7 +18,7 @@ function ListingCard() {
           <CardMedia
             sx={{ paddingTop: 4, paddingBottom: 4 }}
             component="img"
-            image="/images/drone-placeholder.png"
+            image="/images/placeholder/drone-placeholder.png"
             alt="Thumbnail"
             height="250"
           />
