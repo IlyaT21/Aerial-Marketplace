@@ -1,32 +1,23 @@
-import { AppBar, Toolbar, IconButton, Stack, Button } from "@mui/material";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import PersonIcon from "@mui/icons-material/Person";
+import NavMenuDesktop from "./NavMenuDesktop";
+import NavMenuMobile from "./NavMenuMobile";
 
 export const Header = () => {
   return (
     <AppBar>
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <IconButton disableFocusRipple color="inherit">
-          <FlightTakeoffIcon /> Sky Riders
-        </IconButton>
-        <Stack direction="row" spacing={4}>
-          <Button href="#" color="inherit" size="large">
-            Drones
-          </Button>
-          <Button href="#" color="inherit" size="large">
-            Planes
-          </Button>
-          <Button href="#" color="inherit" size="large">
-            Helicopters
-          </Button>
-          <Button href="#" color="inherit" size="large">
-            Other
-          </Button>
-          <IconButton disableFocusRipple color="inherit">
-            Log In
-            <PersonIcon />
-          </IconButton>
-        </Stack>
+        <Button
+          disableRipple
+          size="large"
+          color="inherit"
+          sx={{ gap: 2, backgroundColor: "transparent" }}
+          startIcon={<FlightTakeoffIcon />}
+        >
+          Sky Riders
+        </Button>
+        <NavMenuDesktop />
+        <NavMenuMobile />
       </Toolbar>
     </AppBar>
   );
