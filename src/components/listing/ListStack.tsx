@@ -6,42 +6,42 @@ import { Button } from "@mui/material";
 
 function ListStack() {
   return (
-    <Stack sx={{ maxWidth: "1400px" }}>
+    <Stack paddingLeft={4} paddingRight={4} sx={{ maxWidth: "1400px" }}>
       <Grid container spacing={4}>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <ListingCard></ListingCard>
         </Grid>
       </Grid>
