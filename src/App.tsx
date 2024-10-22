@@ -1,8 +1,6 @@
 import "./App.scss";
 import Footer from "./components/global/Footer";
 import { Header } from "./components/global/Header";
-import Hero from "./components/global/Hero";
-import ListStack from "./components/listing/ListStack";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Listing from "./pages/Listing";

@@ -5,8 +5,12 @@ import React, { Component } from "react";
 export class ListingCarousel extends Component {
   render() {
     return (
-      <Grid2 display="flex" direction="row" width="50%">
-        <Stack width="50%">
+      <Grid2
+        display="flex"
+        direction="row"
+        width={{ xs: "100%", sm: "75%", md: "50%" }}
+      >
+        <Stack width="25%">
           <Box
             component="img"
             src="/images/placeholder/drone-placeholder.png"
@@ -28,7 +32,7 @@ export class ListingCarousel extends Component {
           src="/images/placeholder/drone-placeholder.png"
           alt="Product"
           sx={{
-            width: "50%",
+            width: "75%",
             objectFit: "cover",
           }}
         />

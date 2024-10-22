@@ -13,7 +13,7 @@ import { useState } from "react";
 function ListingGeneralInfo() {
   const [open, setOpen] = useState(false);
   return (
-    <Stack width="50%">
+    <Stack width={{ xs: "100%", md: "50%" }} pt={4}>
       <Typography variant="h3" gutterBottom textAlign="left">
         Product Name
       </Typography>
@@ -26,7 +26,12 @@ function ListingGeneralInfo() {
         maxime asperiores temporibus optio tempore totam dicta et quasi eligendi
         labore. Ratione nulla temporibus dicta!
       </Typography>
-      <Stack direction="row" alignItems="flex-end" justifyContent="space-between">
+      <Stack
+        direction="row"
+        alignItems="flex-end"
+        justifyContent="space-between"
+        py={8}
+      >
         <Typography variant="body1">$250</Typography>
         <Button variant="contained" onClick={() => setOpen(true)}>
           Contact Seller

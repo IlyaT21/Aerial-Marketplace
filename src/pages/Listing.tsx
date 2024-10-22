@@ -1,11 +1,14 @@
 import React from 'react'
-import Hero from '../components/global/Hero'
 import ListingSingle from '../components/listing/ListingSingle'
+import ListingSimilar from '../components/listing/components/ListingSimilar'
 
 function Listing() {
   return (
-    <ListingSingle></ListingSingle>
-  )
+    <>
+      <ListingSingle></ListingSingle>
+      <ListingSimilar></ListingSimilar>
+    </>
+  );
 }
 
 export default Listing
