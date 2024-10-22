@@ -14,7 +14,12 @@ function ListingGeneralInfo() {
   const [open, setOpen] = useState(false);
   return (
     <Stack width={{ xs: "100%", md: "50%" }} pt={4}>
-      <Typography variant="h3" gutterBottom textAlign="left">
+      <Typography
+        variant="h3"
+        gutterBottom
+        textAlign="left"
+        sx={{ fontSize: { xs: "3rem", md: "4rem" } }}
+      >
         Product Name
       </Typography>
       <Typography variant="h5" gutterBottom textAlign="left">
