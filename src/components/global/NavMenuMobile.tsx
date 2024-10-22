@@ -4,7 +4,19 @@ import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
 
-function NavMenuMobile() {
+interface NavMenuMobileProps {
+  isLoggedIn: boolean;
+  userRole: string | null;
+  handleLogin: (role: string) => void;
+  handleLogout: () => void;
+}
+
+function NavMenuMobile({
+  isLoggedIn,
+  userRole,
+  handleLogin,
+  handleLogout,
+}: NavMenuMobileProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <Stack display={{ xs: "block", md: "none" }}>
@@ -16,7 +28,16 @@ function NavMenuMobile() {
         open={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
       >
-        <Stack spacing={4}>
+        <Stack spacing={4} alignItems="flex-start" my="auto">
+          <Button
+            disableRipple
+            href="#"
+            color="inherit"
+            size="large"
+            sx={{ backgroundColor: "transparent" }}
+          >
+            All
+          </Button>
           <Button
             disableRipple
             href="#"
@@ -53,15 +74,29 @@ function NavMenuMobile() {
           >
             Other
           </Button>
-          <Button
-            disableRipple
-            size="large"
-            color="inherit"
-            sx={{ gap: 2, backgroundColor: "transparent" }}
-            endIcon={<PersonIcon />}
-          >
-            Log In
-          </Button>
+          {isLoggedIn ? (
+            <Button
+              disableRipple
+              size="large"
+              color="inherit"
+              sx={{ gap: 2, backgroundColor: "transparent" }}
+              endIcon={<PersonIcon />}
+              onClick={() => handleLogout()}
+            >
+              Log Out
+            </Button>
+          ) : (
+            <Button
+              disableRipple
+              size="large"
+              color="inherit"
+              sx={{ gap: 2, backgroundColor: "transparent" }}
+              endIcon={<PersonIcon />}
+              onClick={() => handleLogin("user")}
+            >
+              Log In
+            </Button>
+          )}
         </Stack>
       </Drawer>
     </Stack>
