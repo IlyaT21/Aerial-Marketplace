@@ -23,7 +23,12 @@ function Hero() {
         borderRadius={4}
         padding={4}
       >
-        <Typography variant="h1" gutterBottom color="inherit">
+        <Typography
+          variant="h1"
+          gutterBottom
+          color="inherit"
+          sx={{ fontSize: { xs: "3rem", md: "5rem" } }}
+        >
           Page Title
         </Typography>
         <Typography variant="body1">
