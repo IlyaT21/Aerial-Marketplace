@@ -35,7 +35,7 @@ function ListingCard() {
             sx={{ paddingTop: 4 }}
           >
             <CardActions sx={{ padding: 0 }}>
-              <Button size="small" variant="contained">
+              <Button href="/listing" size="small" variant="contained">
                 Read More
               </Button>
             </CardActions>

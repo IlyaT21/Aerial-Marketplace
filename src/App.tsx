@@ -3,13 +3,21 @@ import Footer from "./components/global/Footer";
 import { Header } from "./components/global/Header";
 import Hero from "./components/global/Hero";
 import ListStack from "./components/listing/ListStack";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Homepage from "./pages/Homepage";
+import Listing from "./pages/Listing";
 
 function App() {
   return (
     <div className="App">
       <Header></Header>
-      <Hero></Hero>
-      <ListStack></ListStack>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/listing" element={<Listing />} />
+        </Routes>
+      </Router>
       <Footer></Footer>
     </div>
   );
