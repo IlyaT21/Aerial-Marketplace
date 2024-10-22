@@ -92,7 +92,7 @@ function NavMenuMobile({
               color="inherit"
               sx={{ gap: 2, backgroundColor: "transparent" }}
               endIcon={<PersonIcon />}
-              onClick={() => handleLogin("user")}
+              href="/login"
             >
               Log In
             </Button>
