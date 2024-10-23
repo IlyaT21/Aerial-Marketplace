@@ -3,7 +3,6 @@ import {
   FormControl,
   TextField,
   Button,
-  InputLabel,
   InputAdornment,
   IconButton,
   Divider,
@@ -37,13 +36,12 @@ function Login() {
           xs: "calc(100vh - 108px)",
           sm: "calc(100vh - 116px)",
           md: "calc(100vh - 132px)",
+          width: "100%",
+          maxWidth: "600px",
         },
       }}
     >
-      <Stack
-        spacing={3}
-        sx={{ width: "100%", maxWidth: "400px", margin: "0 auto" }}
-      >
+      <Stack spacing={3} sx={{ width: "100%", margin: "0 auto" }}>
         <FormControl fullWidth>
           <TextField
             label="Email"
@@ -52,6 +50,9 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
             required
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </FormControl>
 
@@ -63,6 +64,9 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             variant="outlined"
             required
+            InputLabelProps={{
+              shrink: true,
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
