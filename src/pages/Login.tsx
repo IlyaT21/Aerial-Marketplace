@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useState } from "react";
+import { Box } from "@mui/system";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -78,17 +79,20 @@ function Login() {
             }}
           />
         </FormControl>
-
-        <Button variant="contained" color="primary" onClick={handleLogin}>
-          Login
-        </Button>
+        <Box>
+          <Button variant="contained" color="primary" onClick={handleLogin}>
+            Login
+          </Button>
+        </Box>
       </Stack>
       <Divider></Divider>
       <Stack gap={4}>
         <Typography variant="h6">Don't have an account?</Typography>
-        <Button variant="contained" href="/register">
-          Create an Account
-        </Button>
+        <Box>
+          <Button variant="contained" href="/register">
+            Create an Account
+          </Button>
+        </Box>
       </Stack>
     </Stack>
   );
