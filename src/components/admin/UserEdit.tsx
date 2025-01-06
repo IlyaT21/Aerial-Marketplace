@@ -1,6 +1,16 @@
-import { Button, FormControl, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  TextField,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material";
 import { Stack } from "@mui/system";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 function UserEdit() {
   const [firstName, setFirstName] = useState("");
@@ -21,8 +31,30 @@ function UserEdit() {
     }
     console.log({ firstName, lastName, email, password });
   };
+
+  const [open, setOpen] = useState(false);
+
+  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    event.preventDefault();
+    setOpen(true);
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   return (
     <Stack alignItems="flex-start" spacing={2}>
+      <Button
+        size="small"
+        startIcon={<ArrowBackIosIcon />}
+        onClick={() => setOpen(true)}
+      >
+        Back
+      </Button>
       <Typography variant="h3">Edit User</Typography>
       <Stack spacing={4} width="100%" alignItems="center">
         <FormControl fullWidth required>
@@ -117,6 +149,25 @@ function UserEdit() {
           </Button>
         </Stack>
       </Stack>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Contact Information</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You have unsaved changes. Do you wish to save them?
+          </DialogContentText>
+          <Stack direction="row" alignItems="center" my={4} gap={4}>
+            <Button variant="contained" color="error" href="/admin-dashboard">
+              Don't save
+            </Button>
+            <Button variant="contained" href="/admin-dashboard">
+              Save changes
+            </Button>
+            <Button variant="outlined" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+          </Stack>
+        </DialogContent>
+      </Dialog>
     </Stack>
   );
 }
