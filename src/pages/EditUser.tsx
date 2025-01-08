@@ -3,6 +3,10 @@ import UserEdit from "../components/admin/UserEdit";
 import { Stack } from "@mui/material";
 
 function EditUser() {
+  window.addEventListener("beforeunload", function (event) {
+    event.stopImmediatePropagation();
+  });
+
   return (
     <Stack
       justifyContent={{
