@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdminDashboard from "./pages/AdminDashboard";
 import EditUser from "./pages/EditUser";
+import EditProduct from "./pages/EditProduct";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/edit-user" element={<EditUser />} />
+          <Route path="/edit-product" element={<EditProduct />} />
         </Routes>
       </Router>
       <Footer></Footer>

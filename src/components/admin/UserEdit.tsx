@@ -150,7 +150,7 @@ function UserEdit() {
         </Stack>
       </Stack>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Contact Information</DialogTitle>
+        <DialogTitle>Unsaved Changes</DialogTitle>
         <DialogContent>
           <DialogContentText>
             You have unsaved changes. Do you wish to save them?
