@@ -15,15 +15,45 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const role = "buyer";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     // Perform form validation here (e.g., check if passwords match)
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-    // Submit form data
-    console.log({ firstName, lastName, email, password, role });
+
+    try {
+      // Send a POST request to your backend
+      const response = await fetch("http://localhost:5000/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          role,
+        }),
+      });
+
+      // Handle the response
+      if (response.ok) {
+        const data = await response.json();
+        console.log("User registered successfully:", data);
+        alert("User registered successfully!");
+      } else {
+        const errorData = await response.json();
+        console.error("Error registering user:", errorData);
+        alert(`Error: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      alert("An error occurred while registering the user. Please try again.");
+    }
   };
 
   return (
