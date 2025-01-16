@@ -17,6 +17,7 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const role = "seller";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
       return;
     }
     // Submit form data
-    console.log({ firstName, lastName, email, password });
+    console.log({ firstName, lastName, email, password, role });
   };
   return (
     <Stack alignItems="flex-start" spacing={2}>
@@ -73,6 +74,10 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+        </FormControl>
+
+        <FormControl fullWidth required sx={{ display: "none" }}>
+          <TextField type="text" value={role} />
         </FormControl>
 
         <FormControl fullWidth required>

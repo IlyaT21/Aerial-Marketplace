@@ -13,6 +13,7 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const role = "buyer";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +23,7 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
       return;
     }
     // Submit form data
-    console.log({ firstName, lastName, email, password });
+    console.log({ firstName, lastName, email, password, role });
   };
 
   return (
@@ -61,6 +62,10 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+        </FormControl>
+
+        <FormControl fullWidth required sx={{ display: "none" }}>
+          <TextField type="text" value={role} />
         </FormControl>
 
         <FormControl fullWidth required>
