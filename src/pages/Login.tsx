@@ -17,10 +17,36 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
-    // Handle login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const handleLogin = async () => {
+    console.log(email, password);
+    try {
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Login successful!");
+        localStorage.setItem("token", data.token);
+      } else {
+        alert(`Login failed: ${data.message}`);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        // If error is an instance of Error, log the message
+        console.error("An error occurred during login:", error.message);
+        alert("An error occurred. Please try again.");
+      } else {
+        // Handle unexpected error formats
+        console.error("An unexpected error occurred:", error);
+        alert("An unexpected error occurred. Please try again.");
+      }
+    }
   };
 
   const togglePasswordVisibility = () => {
