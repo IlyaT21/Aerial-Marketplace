@@ -11,6 +11,7 @@ import {
 import { Stack } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useParams } from "react-router-dom";
 
 function UserEdit() {
   const [firstName, setFirstName] = useState("");
@@ -22,6 +23,9 @@ function UserEdit() {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const { id } = useParams();
+  console.log(id)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
