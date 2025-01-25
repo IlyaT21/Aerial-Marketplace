@@ -12,6 +12,19 @@ import { Stack } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  company: string;
+  city: string;
+  address: string;
+  country: string;
+}
 
 function UserEdit() {
   const [firstName, setFirstName] = useState("");
@@ -24,16 +37,67 @@ function UserEdit() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { id } = useParams();
-  console.log(id)
+  const { id } = useParams<{ id: string }>();
+  const [user, setUser] = useState<User | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:5000/api/users/${id}`
+        );
+
+        // Populate state variables with the fetched user data
+        setUser(data);
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setCompany(data.company);
+        setEmail(data.email);
+        setCountry(data.country);
+        setCity(data.city);
+        setAddress(data.address);
+      } catch (err: any) {
+        console.error("Error fetching user:", err.message);
+      }
+    };
+
+    fetchUser();
+  }, [id]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check if passwords match
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-    console.log({ firstName, lastName, email, password });
+
+    // Construct the updated user object
+    const updatedUser = {
+      firstName,
+      lastName,
+      email,
+      password: password || undefined, // Send password only if it's provided
+      // company: user?.role !== "buyer" ? company : undefined, // Include company only if not a buyer
+      // country,
+      // city,
+      // address,
+    };
+
+    try {
+      // Send a PUT request to update the user in the backend
+      const { data } = await axios.put(
+        `http://localhost:5000/api/users/${id}`,
+        updatedUser
+      );
+
+      console.log("User updated successfully:", data);
+      alert("User updated successfully!");
+    } catch (error: any) {
+      console.error("Error updating user:", error.message);
+      alert(`Error updating user: ${error.message}`);
+    }
   };
 
   const [open, setOpen] = useState(false);
@@ -79,14 +143,16 @@ function UserEdit() {
           />
         </FormControl>
 
-        <FormControl fullWidth required>
-          <TextField
-            label="Company"
-            variant="outlined"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-          />
-        </FormControl>
+        {user?.role !== "buyer" && (
+          <FormControl fullWidth required>
+            <TextField
+              label="Company"
+              variant="outlined"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
+          </FormControl>
+        )}
 
         <FormControl fullWidth required>
           <TextField
@@ -98,32 +164,38 @@ function UserEdit() {
           />
         </FormControl>
 
-        <FormControl fullWidth required>
-          <TextField
-            label="Country"
-            variant="outlined"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          />
-        </FormControl>
+        {user?.role !== "buyer" && (
+          <FormControl fullWidth required>
+            <TextField
+              label="Country"
+              variant="outlined"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            />
+          </FormControl>
+        )}
 
-        <FormControl fullWidth required>
-          <TextField
-            label="City"
-            variant="outlined"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </FormControl>
+        {user?.role !== "buyer" && (
+          <FormControl fullWidth required>
+            <TextField
+              label="City"
+              variant="outlined"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </FormControl>
+        )}
 
-        <FormControl fullWidth required>
-          <TextField
-            label="Address"
-            variant="outlined"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </FormControl>
+        {user?.role !== "buyer" && (
+          <FormControl fullWidth required>
+            <TextField
+              label="Address"
+              variant="outlined"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </FormControl>
+        )}
 
         <FormControl fullWidth required>
           <TextField
