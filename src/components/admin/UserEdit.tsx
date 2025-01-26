@@ -78,11 +78,11 @@ function UserEdit() {
       firstName,
       lastName,
       email,
-      password: password || undefined, // Send password only if it's provided
-      // company: user?.role !== "buyer" ? company : undefined, // Include company only if not a buyer
-      // country,
-      // city,
-      // address,
+      password: password || undefined,
+      company: user?.role !== "buyer" ? company : undefined,
+      country: user?.role !== "buyer" ? country : undefined,
+      city: user?.role !== "buyer" ? city : undefined,
+      address: user?.role !== "buyer" ? address : undefined,
     };
 
     try {
