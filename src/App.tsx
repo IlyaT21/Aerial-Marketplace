@@ -10,8 +10,18 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EditUser from "./pages/EditUser";
 import EditProduct from "./pages/EditProduct";
 import AddProduct from "./pages/AddProduct";
+import jwt_decode from "jwt-decode";
 
 function App() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    console.log("Token found:", token);
+    const decodedToken = jwt_decode<{ id: string; role: string }>(token); // Decode with correct type
+    console.log(decodedToken.role);
+  } else {
+    console.log("No token found, redirect to login...");
+  }
+
   return (
     <div className="App">
       <Header></Header>
