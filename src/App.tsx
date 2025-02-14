@@ -11,12 +11,14 @@ import EditUser from "./pages/EditUser";
 import EditProduct from "./pages/EditProduct";
 import AddProduct from "./pages/AddProduct";
 import { jwtDecode } from "jwt-decode";
+import AuthGuard from "./AuthGuard";
+import PublicRoute from "./PublicRoute";
 
 function App() {
   const token = localStorage.getItem("token");
   if (token) {
     console.log("Token found:", token);
-    const decodedToken = jwtDecode<{ id: string; role: string }>(token); // Decode with correct type
+    const decodedToken = jwtDecode<{ id: string; role: string }>(token);
     console.log(decodedToken.role);
   } else {
     console.log("No token found, redirect to login...");
@@ -24,18 +26,59 @@ function App() {
 
   return (
     <div className="App">
-      <Header></Header>
+      <Header token={token} />
       <Router>
-        <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/listing" element={<Listing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/edit-user/:id" element={<EditUser />} />
-          <Route path="/edit-product" element={<EditProduct />} />
-          <Route path="/add-product" element={<AddProduct />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <AuthGuard roles={["admin"]}>
+                <AdminDashboard />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/edit-user/:id"
+            element={
+              <AuthGuard roles={["admin", "seller"]}>
+                <EditUser />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/edit-product"
+            element={
+              <AuthGuard roles={["admin", "seller"]}>
+                <EditProduct />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/add-product"
+            element={
+              <AuthGuard roles={["admin", "seller"]}>
+                <AddProduct />
+              </AuthGuard>
+            }
+          />
         </Routes>
       </Router>
       <Footer></Footer>

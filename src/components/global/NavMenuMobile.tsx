@@ -3,12 +3,14 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 interface NavMenuMobileProps {
   isLoggedIn: boolean;
   userRole: string | null;
   handleLogin: (role: string) => void;
   handleLogout: () => void;
+  token: string | null;
 }
 
 function NavMenuMobile({
@@ -16,8 +18,15 @@ function NavMenuMobile({
   userRole,
   handleLogin,
   handleLogout,
+  token,
 }: NavMenuMobileProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  if (token) {
+    const decodedToken = jwtDecode<{ id: string; role: string }>(token);
+    userRole = decodedToken.role;
+  }
+
   return (
     <Stack display={{ xs: "block", md: "none" }}>
       <IconButton color="inherit" onClick={() => setIsMenuOpen(true)}>
@@ -74,7 +83,7 @@ function NavMenuMobile({
           >
             Other
           </Button>
-          {isLoggedIn ? (
+          {token ? (
             <Button
               disableRipple
               size="large"

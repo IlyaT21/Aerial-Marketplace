@@ -31,8 +31,8 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Login successful!");
         localStorage.setItem("token", data.token);
+        window.location.reload();
       } else {
         alert(`Login failed: ${data.message}`);
       }

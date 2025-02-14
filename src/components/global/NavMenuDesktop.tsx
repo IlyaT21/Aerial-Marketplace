@@ -2,19 +2,20 @@ import React from "react";
 import { Stack, Button, Menu, MenuItem } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 interface NavMenuDesktopProps {
   isLoggedIn: boolean;
   userRole: string | null;
-  handleLogin: (role: string) => void;
   handleLogout: () => void;
+  token: string | null;
 }
 
 function NavMenuDesktop({
   isLoggedIn,
   userRole,
-  handleLogin,
   handleLogout,
+  token,
 }: NavMenuDesktopProps) {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorElement);
@@ -24,6 +25,12 @@ function NavMenuDesktop({
   const handleClose = () => {
     setAnchorElement(null);
   };
+
+  if (token) {
+    const decodedToken = jwtDecode<{ id: string; role: string }>(token);
+    userRole = decodedToken.role;
+  }
+
   return (
     <Stack
       direction="row"
@@ -75,7 +82,7 @@ function NavMenuDesktop({
       >
         Other
       </Button>
-      {isLoggedIn ? (
+      {token ? (
         <>
           <Button
             id="toggleUserMenu"
@@ -98,6 +105,7 @@ function NavMenuDesktop({
               <MenuItem>
                 <Button
                   disableRipple
+                  href="/admin-dashboard"
                   size="large"
                   color="inherit"
                   sx={{ backgroundColor: "transparent" }}
