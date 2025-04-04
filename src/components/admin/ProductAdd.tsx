@@ -15,9 +15,10 @@ import {
 import { Stack } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { jwtDecode } from "jwt-decode";
 
 function ProductAdd() {
-  // const [fileName, setFileName] = useState("");
+  const [fileName, setFileName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [productName, setProductName] = useState("");
@@ -29,11 +30,6 @@ function ProductAdd() {
   const [year, setYear] = useState("");
   const [condition, setCondition] = useState("");
   const [registration, setRegistration] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // console.log({ firstName, lastName, email, password });
-  };
 
   const currentYear = new Date().getFullYear();
   const years = Array.from(
@@ -72,7 +68,7 @@ function ProductAdd() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("https://your-server-endpoint.com/upload", {
+      const response = await fetch("http://localhost:5000/api/products", {
         method: "POST",
         body: formData,
       });
@@ -101,6 +97,53 @@ function ProductAdd() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
+  const token = localStorage.getItem("token");
+
+  let userId: string | null = null;
+  if (token) {
+    const decodedToken = jwtDecode<{ id: string; role: string }>(token);
+    userId = decodedToken.id;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("productCategory", category);
+    formData.append("productDescription", productDescription);
+    formData.append("price", price);
+    formData.append("model", model);
+    formData.append("manufacturer", manufacturer);
+    formData.append("year", year);
+    formData.append("condition", condition);
+    formData.append("registration", registration);
+    formData.append("sellerId", userId!);
+
+    console.log(category);
+
+    if (file) {
+      formData.append("image", file); // "image" matches multer's field name
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/products", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Product created successfully!");
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error: any) {
+      console.error("Error submitting product:", error.message);
+    }
+  };
+
   return (
     <Stack alignItems="flex-start" spacing={2}>
       <Button
@@ -179,7 +222,7 @@ function ProductAdd() {
           />
         </FormControl>
 
-        <FormControl fullWidth required>
+        <FormControl fullWidth>
           <TextField
             label="Model"
             variant="outlined"
@@ -213,7 +256,7 @@ function ProductAdd() {
           </Select>
         </FormControl>
 
-        <FormControl fullWidth required>
+        <FormControl fullWidth>
           <TextField
             label="Condition"
             variant="outlined"
@@ -222,7 +265,7 @@ function ProductAdd() {
           />
         </FormControl>
 
-        <FormControl fullWidth required>
+        <FormControl fullWidth>
           <TextField
             label="Registration"
             variant="outlined"
@@ -232,10 +275,7 @@ function ProductAdd() {
         </FormControl>
         <Stack width="100%" direction="row" justifyContent="center" gap={4}>
           <Button variant="contained" onClick={handleSubmit}>
-            Save Changes
-          </Button>
-          <Button variant="contained" color="error">
-            Delete User
+            Add Product
           </Button>
         </Stack>
       </Stack>
