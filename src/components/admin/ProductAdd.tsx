@@ -111,7 +111,7 @@ function ProductAdd() {
 
     const formData = new FormData();
     formData.append("productName", productName);
-    formData.append("productCategory", category);
+    formData.append("category", category);
     formData.append("productDescription", productDescription);
     formData.append("price", price);
     formData.append("model", model);
