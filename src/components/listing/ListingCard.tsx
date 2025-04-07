@@ -10,7 +10,11 @@ import {
 } from "@mui/material";
 import React from "react";
 
-function ListingCard() {
+type ListingCardProps = {
+  product?: any;
+};
+
+const ListingCard: React.FC<ListingCardProps> = ({ product }) => {
   return (
     <Box>
       <Card elevation={4}>
@@ -18,15 +22,19 @@ function ListingCard() {
           <CardMedia
             sx={{ paddingTop: 4, paddingBottom: 4 }}
             component="img"
-            image="/images/placeholder/drone-placeholder.png"
-            alt="Thumbnail"
+            image={
+              product?.productImage
+                ? `http://localhost:5000/uploads/${product.productImage}`
+                : "/images/placeholder/drone-placeholder.png"
+            }
+            alt={product.productName}
             height="250"
           />
           <Typography variant="h4" gutterBottom color="primary">
-            Listing Title
+            {product.productName}
           </Typography>
           <Typography variant="h5" color="primary">
-            Category - prodCat
+            {product.category}
           </Typography>
           <Stack
             direction="row"
@@ -39,7 +47,7 @@ function ListingCard() {
                 Read More
               </Button>
             </CardActions>
-            <Typography variant="h5">$250</Typography>
+            <Typography variant="h5">${product.price}</Typography>
           </Stack>
         </CardContent>
       </Card>
