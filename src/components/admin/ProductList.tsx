@@ -13,7 +13,8 @@ import { Stack } from "@mui/system";
 import Grid from "@mui/material/Grid2";
 import ClearIcon from "@mui/icons-material/Clear";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface Product {
   listingTitle: string;
@@ -23,7 +24,13 @@ function ProductList() {
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const handleOpenDialog = (listingTitle: string) => {
+  // Products per category
+  const [drones, setDrones] = useState<any[]>([]);
+  const [planes, setPlanes] = useState<any[]>([]);
+  const [helicopters, setHelicopters] = useState<any[]>([]);
+  const [other, setOther] = useState<any[]>([]);
+
+  const handleOpenDialog = (listingTitle: string, product_id:string) => {
     setSelectedProduct({ listingTitle });
     setOpen(true);
   };
@@ -32,6 +39,34 @@ function ProductList() {
     setOpen(false);
     setSelectedProduct(null);
   };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const endpointDrones = `http://localhost:5000/api/products/category/Drones`;
+        const endpointPlanes = `http://localhost:5000/api/products/category/Planes`;
+        const endpointHelicopters = `http://localhost:5000/api/products/category/Helicopters`;
+        const endpointOther = `http://localhost:5000/api/products/category/Other`;
+
+        const { data: dataDrones } = await axios.get(endpointDrones);
+        const { data: dataPlanes } = await axios.get(endpointPlanes);
+        const { data: dataHelicopters } = await axios.get(endpointHelicopters);
+        const { data: dataOther } = await axios.get(endpointOther);
+
+        // console.log("Fetched products:", data);
+
+        setDrones(dataDrones.products);
+        setPlanes(dataPlanes.products);
+        setHelicopters(dataHelicopters.products);
+        setOther(dataOther.products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <Stack gap={8}>
       <Stack gap={4}>
@@ -50,483 +85,75 @@ function ProductList() {
             gap: 2,
           }}
         >
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          {drones.length > 0 ? (
+            drones.map((product) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product._id}>
+                <Card elevation={4}>
+                  <CardContent>
+                    <CardMedia
+                      sx={{ padding: 2 }}
+                      component="img"
+                      image={
+                        product?.productImage
+                          ? `http://localhost:5000/uploads/${product.productImage}`
+                          : "/images/placeholder/drone-placeholder.png"
+                      }
+                      alt={product.productName}
+                      height="250"
+                    />
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.productName}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.sellerId.firstName} {product.sellerId.lastName}
+                    </Typography>
+                    <Stack
+                      sx={{
+                        padding: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Button
+                        fullWidth
+                        startIcon={
+                          <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
+                        }
+                        variant="contained"
+                      >
+                        More Details
+                      </Button>
+                      <Button
+                        fullWidth
+                        startIcon={<ClearIcon></ClearIcon>}
+                        variant="contained"
+                        sx={{ marginLeft: 0 }}
+                        onClick={() =>
+                          handleOpenDialog("Big Drone", product._id)
+                        }
+                      >
+                        Delete Listing
+                      </Button>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography variant="h6">No products found.</Typography>
+          )}
         </Grid>
         <Typography textAlign="left" variant="h4" gutterBottom>
           Planes:
@@ -543,271 +170,75 @@ function ProductList() {
             gap: 2,
           }}
         >
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          {planes.length > 0 ? (
+            planes.map((product) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product._id}>
+                <Card elevation={4}>
+                  <CardContent>
+                    <CardMedia
+                      sx={{ padding: 2 }}
+                      component="img"
+                      image={
+                        product?.productImage
+                          ? `http://localhost:5000/uploads/${product.productImage}`
+                          : "/images/placeholder/drone-placeholder.png"
+                      }
+                      alt={product.productName}
+                      height="250"
+                    />
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.productName}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.sellerId.firstName} {product.sellerId.lastName}
+                    </Typography>
+                    <Stack
+                      sx={{
+                        padding: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Button
+                        fullWidth
+                        startIcon={
+                          <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
+                        }
+                        variant="contained"
+                      >
+                        More Details
+                      </Button>
+                      <Button
+                        fullWidth
+                        startIcon={<ClearIcon></ClearIcon>}
+                        variant="contained"
+                        sx={{ marginLeft: 0 }}
+                        onClick={() =>
+                          handleOpenDialog("Big Drone", product._id)
+                        }
+                      >
+                        Delete Listing
+                      </Button>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography variant="h6">No products found.</Typography>
+          )}
         </Grid>
         <Typography textAlign="left" variant="h4" gutterBottom>
           Helicopters:
@@ -824,112 +255,75 @@ function ProductList() {
             gap: 2,
           }}
         >
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          {helicopters.length > 0 ? (
+            helicopters.map((product) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product._id}>
+                <Card elevation={4}>
+                  <CardContent>
+                    <CardMedia
+                      sx={{ padding: 2 }}
+                      component="img"
+                      image={
+                        product?.productImage
+                          ? `http://localhost:5000/uploads/${product.productImage}`
+                          : "/images/placeholder/drone-placeholder.png"
+                      }
+                      alt={product.productName}
+                      height="250"
+                    />
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.productName}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.sellerId.firstName} {product.sellerId.lastName}
+                    </Typography>
+                    <Stack
+                      sx={{
+                        padding: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Button
+                        fullWidth
+                        startIcon={
+                          <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
+                        }
+                        variant="contained"
+                      >
+                        More Details
+                      </Button>
+                      <Button
+                        fullWidth
+                        startIcon={<ClearIcon></ClearIcon>}
+                        variant="contained"
+                        sx={{ marginLeft: 0 }}
+                        onClick={() =>
+                          handleOpenDialog("Big Drone", product._id)
+                        }
+                      >
+                        Delete Listing
+                      </Button>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography variant="h6">No products found.</Typography>
+          )}
         </Grid>
         <Typography textAlign="left" variant="h4" gutterBottom>
           Other:
@@ -946,218 +340,75 @@ function ProductList() {
             gap: 2,
           }}
         >
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Card elevation={4}>
-            <CardContent>
-              <CardMedia
-                sx={{ padding: 2 }}
-                component="img"
-                image="/images/placeholder/drone-placeholder.png"
-                alt="Thumbnail"
-                height="250"
-              />
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Big Drone
-              </Typography>
-              <Typography
-                variant="body1"
-                gutterBottom
-                color="primary"
-                textAlign="left"
-              >
-                Seller
-              </Typography>
-              <Stack
-                sx={{
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  alignItems: "flex-start",
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<AirplanemodeActiveIcon></AirplanemodeActiveIcon>}
-                  variant="contained"
-                >
-                  More Details
-                </Button>
-                <Button
-                  fullWidth
-                  startIcon={<ClearIcon></ClearIcon>}
-                  variant="contained"
-                  sx={{ marginLeft: 0 }}
-                  onClick={() => handleOpenDialog("Big Drone")}
-                >
-                  Delete Listing
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          {other.length > 0 ? (
+            other.map((product) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product._id}>
+                <Card elevation={4}>
+                  <CardContent>
+                    <CardMedia
+                      sx={{ padding: 2 }}
+                      component="img"
+                      image={
+                        product?.productImage
+                          ? `http://localhost:5000/uploads/${product.productImage}`
+                          : "/images/placeholder/drone-placeholder.png"
+                      }
+                      alt={product.productName}
+                      height="250"
+                    />
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.productName}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      color="primary"
+                      textAlign="left"
+                    >
+                      {product.sellerId.firstName} {product.sellerId.lastName}
+                    </Typography>
+                    <Stack
+                      sx={{
+                        padding: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Button
+                        fullWidth
+                        startIcon={
+                          <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
+                        }
+                        variant="contained"
+                      >
+                        More Details
+                      </Button>
+                      <Button
+                        fullWidth
+                        startIcon={<ClearIcon></ClearIcon>}
+                        variant="contained"
+                        sx={{ marginLeft: 0 }}
+                        onClick={() =>
+                          handleOpenDialog("Big Drone", product._id)
+                        }
+                      >
+                        Delete Listing
+                      </Button>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography variant="h6">No products found.</Typography>
+          )}
         </Grid>
         <Dialog open={open} onClose={handleCloseDialog}>
           <DialogTitle textAlign="center">Delete Listing</DialogTitle>
