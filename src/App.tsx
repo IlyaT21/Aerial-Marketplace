@@ -13,6 +13,10 @@ import AddProduct from "./pages/AddProduct";
 import { jwtDecode } from "jwt-decode";
 import AuthGuard from "./AuthGuard";
 import PublicRoute from "./PublicRoute";
+import Drones from "./pages/Drones";
+import Helicopters from "./pages/Helicopters";
+import Planes from "./pages/Planes";
+import Other from "./pages/Other";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -30,6 +34,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/drones" element={<Drones />} />
+          <Route path="/helicopters" element={<Helicopters />} />
+          <Route path="/planes" element={<Planes />} />
+          <Route path="/other" element={<Other />} />
           <Route path="/listing" element={<Listing />} />
           <Route
             path="/login"

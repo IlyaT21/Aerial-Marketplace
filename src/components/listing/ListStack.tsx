@@ -3,15 +3,26 @@ import axios from "axios";
 import ListingCard from "./ListingCard";
 import Grid from "@mui/material/Grid2";
 import { Box, Stack } from "@mui/system";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
-function ListStack() {
+type ListStackProps = {
+  category?: string;
+};
+
+const ListStack: React.FC<ListStackProps> = ({ category }) => {
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/products");
+        const endpoint = category
+          ? `http://localhost:5000/api/products/category/${category}`
+          : "http://localhost:5000/api/products";
+
+        console.log(category);
+        console.log(endpoint);
+
+        const { data } = await axios.get(endpoint);
         console.log("Fetched products:", data);
 
         setProducts(data.products);
@@ -21,7 +32,7 @@ function ListStack() {
     };
 
     fetchProducts();
-  }, []);
+  }, [category]);
 
   return (
     <Stack
@@ -31,11 +42,15 @@ function ListStack() {
       sx={{ maxWidth: "1400px" }}
     >
       <Grid width="100%" container spacing={4}>
-        {products.map((product) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product._id}>
-            <ListingCard product={product}></ListingCard>
-          </Grid>
-        ))}
+        {products.length > 0 ? (
+          products.map((product) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product._id}>
+              <ListingCard product={product} />
+            </Grid>
+          ))
+        ) : (
+          <Typography variant="h6">No products found.</Typography>
+        )}
       </Grid>
       <Box>
         <Button sx={{ my: 4 }} size="large" variant="contained">
@@ -44,6 +59,6 @@ function ListStack() {
       </Box>
     </Stack>
   );
-}
+};
 
 export default ListStack;

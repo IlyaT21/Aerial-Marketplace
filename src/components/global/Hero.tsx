@@ -2,7 +2,16 @@ import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 
-function Hero() {
+type HeroData = {
+  title: string;
+  description: string;
+};
+
+interface HeroProps {
+  heroData: HeroData;
+}
+
+export const Hero: React.FC<HeroProps> = ({ heroData }) => {
   return (
     <Stack
       minHeight="60vh"
@@ -29,17 +38,12 @@ function Hero() {
           color="inherit"
           sx={{ fontSize: { xs: "3rem", md: "5rem" } }}
         >
-          Page Title
+          {heroData.title}
         </Typography>
-        <Typography variant="body1">
-          Page subtitle - Lorem ipsum, dolor sit amet consectetur adipisicing
-          elit. Ratione veniam similique corrupti quaerat commodi consectetur
-          repellat eius minus quod culpa dolores non exercitationem mollitia aut
-          vel, assumenda officiis illum. Nostrum.
-        </Typography>
+        <Typography variant="body1">{heroData.description}</Typography>
       </Stack>
     </Stack>
   );
-}
+};
 
 export default Hero;

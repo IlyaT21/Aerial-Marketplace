@@ -40,7 +40,7 @@ function NavMenuMobile({
         <Stack spacing={4} alignItems="flex-start" my="auto">
           <Button
             disableRipple
-            href="#"
+            href="/"
             color="inherit"
             size="large"
             sx={{ backgroundColor: "transparent" }}
@@ -49,7 +49,7 @@ function NavMenuMobile({
           </Button>
           <Button
             disableRipple
-            href="#"
+            href="/drones"
             color="inherit"
             size="large"
             sx={{ backgroundColor: "transparent" }}
@@ -58,7 +58,7 @@ function NavMenuMobile({
           </Button>
           <Button
             disableRipple
-            href="#"
+            href="/planes"
             color="inherit"
             size="large"
             sx={{ backgroundColor: "transparent" }}
@@ -67,7 +67,7 @@ function NavMenuMobile({
           </Button>
           <Button
             disableRipple
-            href="#"
+            href="/helicopters"
             color="inherit"
             size="large"
             sx={{ backgroundColor: "transparent" }}
@@ -76,7 +76,7 @@ function NavMenuMobile({
           </Button>
           <Button
             disableRipple
-            href="#"
+            href="/other"
             color="inherit"
             size="large"
             sx={{ backgroundColor: "transparent" }}
