@@ -22,7 +22,7 @@ interface Product {
 
 function ProductList() {
   const [open, setOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
   // Products per category
   const [drones, setDrones] = useState<any[]>([]);
@@ -30,8 +30,8 @@ function ProductList() {
   const [helicopters, setHelicopters] = useState<any[]>([]);
   const [other, setOther] = useState<any[]>([]);
 
-  const handleOpenDialog = (listingTitle: string, product_id:string) => {
-    setSelectedProduct({ listingTitle });
+  const handleOpenDialog = (listingTitle: any, _id: string) => {
+    setSelectedProduct({ listingTitle, _id });
     setOpen(true);
   };
 
@@ -40,32 +40,50 @@ function ProductList() {
     setSelectedProduct(null);
   };
 
+  const fetchProducts = async () => {
+    try {
+      const endpointDrones = `http://localhost:5000/api/products/category/Drones`;
+      const endpointPlanes = `http://localhost:5000/api/products/category/Planes`;
+      const endpointHelicopters = `http://localhost:5000/api/products/category/Helicopters`;
+      const endpointOther = `http://localhost:5000/api/products/category/Other`;
+
+      const { data: dataDrones } = await axios.get(endpointDrones);
+      const { data: dataPlanes } = await axios.get(endpointPlanes);
+      const { data: dataHelicopters } = await axios.get(endpointHelicopters);
+      const { data: dataOther } = await axios.get(endpointOther);
+
+      // console.log("Fetched products:", data);
+
+      setDrones(dataDrones.products);
+      setPlanes(dataPlanes.products);
+      setHelicopters(dataHelicopters.products);
+      setOther(dataOther.products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const endpointDrones = `http://localhost:5000/api/products/category/Drones`;
-        const endpointPlanes = `http://localhost:5000/api/products/category/Planes`;
-        const endpointHelicopters = `http://localhost:5000/api/products/category/Helicopters`;
-        const endpointOther = `http://localhost:5000/api/products/category/Other`;
-
-        const { data: dataDrones } = await axios.get(endpointDrones);
-        const { data: dataPlanes } = await axios.get(endpointPlanes);
-        const { data: dataHelicopters } = await axios.get(endpointHelicopters);
-        const { data: dataOther } = await axios.get(endpointOther);
-
-        // console.log("Fetched products:", data);
-
-        setDrones(dataDrones.products);
-        setPlanes(dataPlanes.products);
-        setHelicopters(dataHelicopters.products);
-        setOther(dataOther.products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
     fetchProducts();
   }, []);
+
+  const handleDelete = async () => {
+    if (!selectedProduct?._id) return;
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/products/${selectedProduct._id}`
+      );
+      if (response.status === 200) {
+        setOpen(false);
+
+        fetchProducts();
+      }
+    } catch (error) {
+      console.error("Delete product error:", error);
+      alert("Failed to delete product");
+    }
+  };
 
   return (
     <Stack gap={8}>
@@ -141,7 +159,7 @@ function ProductList() {
                         variant="contained"
                         sx={{ marginLeft: 0 }}
                         onClick={() =>
-                          handleOpenDialog("Big Drone", product._id)
+                          handleOpenDialog(product.productName, product._id)
                         }
                       >
                         Delete Listing
@@ -226,7 +244,7 @@ function ProductList() {
                         variant="contained"
                         sx={{ marginLeft: 0 }}
                         onClick={() =>
-                          handleOpenDialog("Big Drone", product._id)
+                          handleOpenDialog(product.productName, product._id)
                         }
                       >
                         Delete Listing
@@ -311,7 +329,7 @@ function ProductList() {
                         variant="contained"
                         sx={{ marginLeft: 0 }}
                         onClick={() =>
-                          handleOpenDialog("Big Drone", product._id)
+                          handleOpenDialog(product.productName, product._id)
                         }
                       >
                         Delete Listing
@@ -396,7 +414,7 @@ function ProductList() {
                         variant="contained"
                         sx={{ marginLeft: 0 }}
                         onClick={() =>
-                          handleOpenDialog("Big Drone", product._id)
+                          handleOpenDialog(product.productName, product._id)
                         }
                       >
                         Delete Listing
@@ -423,7 +441,7 @@ function ProductList() {
               gap={2}
               my={4}
             >
-              <Button variant="contained" color="error">
+              <Button variant="contained" color="error" onClick={handleDelete}>
                 Delete Lisitng
               </Button>
               <Button
