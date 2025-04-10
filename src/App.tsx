@@ -21,11 +21,11 @@ import Other from "./pages/Other";
 function App() {
   const token = localStorage.getItem("token");
   if (token) {
-    console.log("Token found:", token);
+    // console.log("Token found:", token);
     const decodedToken = jwtDecode<{ id: string; role: string }>(token);
-    console.log(decodedToken.role);
+    // console.log(decodedToken.role);
   } else {
-    console.log("No token found, redirect to login...");
+    // console.log("No token found, redirect to login...");
   }
 
   return (
@@ -72,7 +72,7 @@ function App() {
             }
           />
           <Route
-            path="/edit-product"
+            path="/edit-product/:id"
             element={
               <AuthGuard roles={["admin", "seller"]}>
                 <EditProduct />

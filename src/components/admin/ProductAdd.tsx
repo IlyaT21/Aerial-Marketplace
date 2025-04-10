@@ -18,7 +18,6 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { jwtDecode } from "jwt-decode";
 
 function ProductAdd() {
-  const [fileName, setFileName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [productName, setProductName] = useState("");
@@ -56,31 +55,6 @@ function ProductAdd() {
 
   const handleCategoryChange = (event: SelectChangeEvent<string>) => {
     setCategory(event.target.value);
-  };
-
-  const handleUpload = async () => {
-    if (!file) {
-      console.error("No file selected.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await fetch("http://localhost:5000/api/products", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        console.log("File uploaded successfully!");
-      } else {
-        console.error("File upload failed.");
-      }
-    } catch (error) {
-      console.error("An error occurred while uploading the file:", error);
-    }
   };
 
   const [open, setOpen] = useState(false);

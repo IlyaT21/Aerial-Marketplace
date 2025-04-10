@@ -15,10 +15,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface Product {
-  listingTitle: string;
-}
+import { Link } from "react-router-dom";
 
 function ProductList() {
   const [open, setOpen] = useState(false);
@@ -146,6 +143,8 @@ function ProductList() {
                     >
                       <Button
                         fullWidth
+                        component={Link}
+                        to={`/edit-product/${product._id}`}
                         startIcon={
                           <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
                         }
@@ -231,6 +230,8 @@ function ProductList() {
                     >
                       <Button
                         fullWidth
+                        component={Link}
+                        to={`/edit-product/${product._id}`}
                         startIcon={
                           <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
                         }
@@ -316,6 +317,8 @@ function ProductList() {
                     >
                       <Button
                         fullWidth
+                        component={Link}
+                        to={`/edit-product/${product._id}`}
                         startIcon={
                           <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
                         }
@@ -401,6 +404,8 @@ function ProductList() {
                     >
                       <Button
                         fullWidth
+                        component={Link}
+                        to={`/edit-product/${product._id}`}
                         startIcon={
                           <AirplanemodeActiveIcon></AirplanemodeActiveIcon>
                         }

@@ -15,9 +15,10 @@ import {
 import { Stack } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function ProductEdit() {
-  // const [fileName, setFileName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [productName, setProductName] = useState("");
@@ -29,11 +30,10 @@ function ProductEdit() {
   const [year, setYear] = useState("");
   const [condition, setCondition] = useState("");
   const [registration, setRegistration] = useState("");
+  const [sellerId, setSellerId] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // console.log({ firstName, lastName, email, password });
-  };
+  const { id: productId } = useParams();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const currentYear = new Date().getFullYear();
   const years = Array.from(
@@ -62,31 +62,6 @@ function ProductEdit() {
     setCategory(event.target.value);
   };
 
-  const handleUpload = async () => {
-    if (!file) {
-      console.error("No file selected.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await fetch("https://your-server-endpoint.com/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        console.log("File uploaded successfully!");
-      } else {
-        console.error("File upload failed.");
-      }
-    } catch (error) {
-      console.error("An error occurred while uploading the file:", error);
-    }
-  };
-
   const [open, setOpen] = useState(false);
 
   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -97,10 +72,87 @@ function ProductEdit() {
   useEffect(() => {
     window.addEventListener("beforeunload", handleBeforeUnload);
 
+    const fetchProduct = async () => {
+      try {
+        const { data: product } = await axios.get(
+          `http://localhost:5000/api/products/${productId}`
+        );
+
+        if (!isLoaded) {
+          setPreview(`http://localhost:5000/uploads/${product.productImage}`);
+          setProductName(product.productName || "");
+          setCategory(product.category || "");
+          setProductDescription(product.productDescription || "");
+          setPrice(product.price || "");
+          setModel(product.model || "");
+          setManufacturer(product.manufacturer || "");
+          setYear(product.year || "");
+          setCondition(product.condition || "");
+          setRegistration(product.registration || "");
+          setSellerId(product.sellerId._id);
+          setFile(null);
+          setIsLoaded(true);
+        }
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+
+    if (productId) {
+      fetchProduct();
+    }
+
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  });
+
+  let userId: string | null | undefined = null;
+  userId = sellerId;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("category", category);
+    formData.append("productDescription", productDescription);
+    formData.append("price", price);
+    formData.append("model", model);
+    formData.append("manufacturer", manufacturer);
+    formData.append("year", year);
+    formData.append("condition", condition);
+    formData.append("registration", registration);
+    formData.append("sellerId", userId!);
+
+    console.log(category);
+
+    if (file) {
+      formData.append("image", file); // "image" matches multer's field name
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/products/${productId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      alert("Product updated successfully!");
+      console.log("Updated product:", response.data);
+    } catch (error: any) {
+      console.error(
+        "Error updating product:",
+        error.response?.data || error.message
+      );
+      alert(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
   return (
     <Stack alignItems="flex-start" spacing={2}>
       <Button
