@@ -10,7 +10,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EditUser from "./pages/EditUser";
 import EditProduct from "./pages/EditProduct";
 import AddProduct from "./pages/AddProduct";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import AuthGuard from "./AuthGuard";
 import PublicRoute from "./PublicRoute";
 import Drones from "./pages/Drones";
@@ -22,7 +22,7 @@ function App() {
   const token = localStorage.getItem("token");
   if (token) {
     // console.log("Token found:", token);
-    const decodedToken = jwtDecode<{ id: string; role: string }>(token);
+    // const decodedToken = jwtDecode<{ id: string; role: string }>(token);
     // console.log(decodedToken.role);
   } else {
     // console.log("No token found, redirect to login...");

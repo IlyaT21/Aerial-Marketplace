@@ -6,7 +6,7 @@ function Listing() {
   return (
     <>
       <ListingSingle></ListingSingle>
-      <ListingSimilar></ListingSimilar>
+      {/* <ListingSimilar></ListingSimilar> */}
     </>
   );
 }
