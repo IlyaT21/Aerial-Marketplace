@@ -1,26 +1,33 @@
-import { Box, Grid2 } from "@mui/material";
-import React, { Component } from "react";
+import { Box, Stack } from "@mui/material";
 
-export class ListingCarousel extends Component {
-  render() {
-    return (
-      <Grid2
-        display="flex"
-        direction="row"
-        width={{ xs: "100%", sm: "75%", md: "50%" }}
-      >
-        <Box
-          component="img"
-          src="/images/placeholder/drone-placeholder.png"
-          alt="Product"
-          sx={{
-            width: "100%",
-            objectFit: "cover",
-          }}
-        />
-      </Grid2>
-    );
-  }
-}
+type ListingCarouselProps = {
+  productImage: string;
+  productName: string;
+};
+
+const ListingCarousel = ({
+  productImage,
+  productName,
+}: ListingCarouselProps) => {
+  const imageUrl = `http://localhost:5000/uploads/${productImage}`;
+
+  return (
+    <Stack
+      display="flex"
+      direction="row"
+      width={{ xs: "100%", sm: "75%", md: "50%" }}
+    >
+      <Box
+        component="img"
+        src={imageUrl}
+        alt={productName}
+        sx={{
+          width: "100%",
+          objectFit: "cover",
+        }}
+      />
+    </Stack>
+  );
+};
 
 export default ListingCarousel;

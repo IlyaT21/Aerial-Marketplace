@@ -9,7 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 
-function ListingDetailedInfo() {
+type DetailedInfoProps = {
+  info: { label: string; value: string | number }[];
+};
+
+function ListingDetailedInfo({ info }: DetailedInfoProps) {
   return (
     <Stack pb={{ xs: 4, md: 8 }}>
       <Accordion>
@@ -68,40 +72,17 @@ function ListingDetailedInfo() {
         </AccordionSummary>
         <AccordionDetails>
           <Stack gap={1}>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Model :
-              </Typography>
-              <Typography variant="body2">Model</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Manufacturer :
-              </Typography>
-              <Typography variant="body2">Manufacturer</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Year :
-              </Typography>
-              <Typography variant="body2">Year</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Condition :
-              </Typography>
-              <Typography variant="body2">Condition</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Registration :
-              </Typography>
-              <Typography variant="body2">Registration</Typography>
-            </Stack>
+            {info.map((item, index) => (
+              <>
+                <Divider />
+                <Stack key={index} direction="row" alignItems="center" gap={1}>
+                  <Typography variant="body1" textAlign="left">
+                    {item.label}:
+                  </Typography>
+                  <Typography variant="body2">{item.value}</Typography>
+                </Stack>
+              </>
+            ))}
           </Stack>
         </AccordionDetails>
       </Accordion>

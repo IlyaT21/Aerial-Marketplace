@@ -10,7 +10,16 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-function ListingGeneralInfo() {
+type GeneralInfoProps = {
+  generalInfo: {
+    productName: string;
+    category: string;
+    description: string;
+    price: number;
+  };
+};
+
+function ListingGeneralInfo({ generalInfo }: GeneralInfoProps) {
   const [open, setOpen] = useState(false);
   return (
     <Stack width={{ xs: "100%", md: "50%" }} pt={4}>
@@ -20,16 +29,13 @@ function ListingGeneralInfo() {
         textAlign="left"
         sx={{ fontSize: { xs: "3rem", md: "4rem" } }}
       >
-        Product Name
+        {generalInfo.productName}
       </Typography>
       <Typography variant="h5" gutterBottom textAlign="left">
-        Product Category
+        {generalInfo.category}
       </Typography>
       <Typography variant="body1" textAlign="left">
-        Product Description - Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Veniam inventore, tempora neque molestias iste facere
-        maxime asperiores temporibus optio tempore totam dicta et quasi eligendi
-        labore. Ratione nulla temporibus dicta!
+        {generalInfo.description}
       </Typography>
       <Stack
         direction="row"
@@ -37,7 +43,7 @@ function ListingGeneralInfo() {
         justifyContent="space-between"
         py={8}
       >
-        <Typography variant="body1">$250</Typography>
+        <Typography variant="body1">${generalInfo.price}</Typography>
         <Button variant="contained" onClick={() => setOpen(true)}>
           Contact Seller
         </Button>

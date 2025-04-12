@@ -9,6 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 type ListingCardProps = {
   product?: any;
@@ -43,7 +44,12 @@ const ListingCard: React.FC<ListingCardProps> = ({ product }) => {
             sx={{ paddingTop: 4 }}
           >
             <CardActions sx={{ padding: 0 }}>
-              <Button href="/listing" size="small" variant="contained">
+              <Button
+                component={Link}
+                to={`/listing/${product._id}`}
+                size="small"
+                variant="contained"
+              >
                 Read More
               </Button>
             </CardActions>
@@ -53,6 +59,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ product }) => {
       </Card>
     </Box>
   );
-}
+};
 
 export default ListingCard;
