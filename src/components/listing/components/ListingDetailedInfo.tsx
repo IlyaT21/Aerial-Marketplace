@@ -10,10 +10,11 @@ import {
 } from "@mui/material";
 
 type DetailedInfoProps = {
-  info: { label: string; value: string | number }[];
+  generalInfo: { label: string; value: string | number }[];
+  sellerInfo: { label: string; value: string | number }[];
 };
 
-function ListingDetailedInfo({ info }: DetailedInfoProps) {
+function ListingDetailedInfo({ generalInfo, sellerInfo }: DetailedInfoProps) {
   return (
     <Stack pb={{ xs: 4, md: 8 }}>
       <Accordion>
@@ -22,47 +23,17 @@ function ListingDetailedInfo({ info }: DetailedInfoProps) {
         </AccordionSummary>
         <AccordionDetails>
           <Stack gap={1}>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                First Name :
-              </Typography>
-              <Typography variant="body2">First Name</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Last Name :
-              </Typography>
-              <Typography variant="body2">Last Name</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Company :
-              </Typography>
-              <Typography variant="body2">Company</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Country :
-              </Typography>
-              <Typography variant="body2">Country</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                City :
-              </Typography>
-              <Typography variant="body2">City</Typography>
-            </Stack>
-            <Divider></Divider>
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography variant="body1" textAlign="left">
-                Address :
-              </Typography>
-              <Typography variant="body2">Address</Typography>
-            </Stack>
+            {sellerInfo.map((item, index) => (
+              <>
+                <Divider />
+                <Stack key={index} direction="row" alignItems="center" gap={1}>
+                  <Typography variant="body1" textAlign="left">
+                    {item.label}:
+                  </Typography>
+                  <Typography variant="body2">{item?.value || "/"}</Typography>
+                </Stack>
+              </>
+            ))}
           </Stack>
         </AccordionDetails>
       </Accordion>
@@ -72,14 +43,14 @@ function ListingDetailedInfo({ info }: DetailedInfoProps) {
         </AccordionSummary>
         <AccordionDetails>
           <Stack gap={1}>
-            {info.map((item, index) => (
+            {generalInfo.map((item, index) => (
               <>
                 <Divider />
                 <Stack key={index} direction="row" alignItems="center" gap={1}>
                   <Typography variant="body1" textAlign="left">
                     {item.label}:
                   </Typography>
-                  <Typography variant="body2">{item.value}</Typography>
+                  <Typography variant="body2">{item?.value || "/"}</Typography>
                 </Stack>
               </>
             ))}

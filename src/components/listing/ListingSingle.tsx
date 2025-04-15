@@ -53,6 +53,15 @@ function ListingSingle() {
     { label: "Registration", value: product.registration },
   ];
 
+  const sellerInfo = [
+    { label: "First Name", value: product.sellerId.firstName },
+    { label: "Last Name", value: product.sellerId.lastName },
+    { label: "Company", value: product.sellerId.company },
+    { label: "Country", value: product.sellerId.country },
+    { label: "City", value: product.sellerId.city },
+    { label: "Address", value: product.sellerId.address },
+  ];
+
   return (
     <Stack
       paddingLeft={4}
@@ -72,7 +81,7 @@ function ListingSingle() {
         ></ListingCarousel>
         <ListingGeneralInfo generalInfo={generalInfo} />
       </Stack>
-      <ListingDetailedInfo info={detailedInfo} />
+      <ListingDetailedInfo sellerInfo={sellerInfo} generalInfo={detailedInfo} />
     </Stack>
   );
 }
