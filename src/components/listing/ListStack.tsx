@@ -11,6 +11,8 @@ type ListStackProps = {
 
 const ListStack: React.FC<ListStackProps> = ({ category }) => {
   const [products, setProducts] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {

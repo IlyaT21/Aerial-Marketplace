@@ -16,6 +16,8 @@ type GeneralInfoProps = {
     category: string;
     description: string;
     price: number;
+    email: string;
+    phone: number;
   };
 };
 
@@ -54,10 +56,14 @@ function ListingGeneralInfo({ generalInfo }: GeneralInfoProps) {
               Contact the seller using one of the methods bellow:
             </DialogContentText>
             <Stack alignItems="flex-start" my={4}>
-              <Button href="mailto:selleremail@email.co">
-                Email: selleremail@email.com
+              <Button href={`mailto:${generalInfo.email}`}>
+                Email: {generalInfo.email}
               </Button>
-              <Button href="tel:+38158742688">Phone: +38158742688</Button>
+              {generalInfo.phone && (
+                <Button href={`mailto:${generalInfo.phone}`}>
+                  Phone: {generalInfo.phone}
+                </Button>
+              )}
             </Stack>
           </DialogContent>
         </Dialog>

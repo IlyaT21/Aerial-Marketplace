@@ -12,6 +12,7 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
@@ -39,6 +40,7 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
           firstName,
           lastName,
           email,
+          phone,
           password,
           role,
           country,
@@ -108,6 +110,16 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
             variant="outlined"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormControl>
+
+        <FormControl fullWidth required>
+          <TextField
+            label="Phone"
+            type="number"
+            variant="outlined"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </FormControl>
 

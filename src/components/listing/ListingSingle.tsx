@@ -43,6 +43,8 @@ function ListingSingle() {
     category: product.category,
     description: product.productDescription,
     price: product.price,
+    email: product.sellerId.email,
+    phone: product.sellerId.phone,
   };
 
   const detailedInfo = [

@@ -19,6 +19,7 @@ interface User {
   firstName: string;
   lastName: string;
   email: string;
+  phone: number;
   role: string;
   company: string;
   city: string;
@@ -31,6 +32,7 @@ function UserEdit() {
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
@@ -53,6 +55,7 @@ function UserEdit() {
         setLastName(data.lastName);
         setCompany(data.company);
         setEmail(data.email);
+        setPhone(data.phone);
         setCountry(data.country);
         setCity(data.city);
         setAddress(data.address);
@@ -78,6 +81,7 @@ function UserEdit() {
       firstName,
       lastName,
       email,
+      phone,
       password: password || undefined,
       company: user?.role !== "buyer" ? company : undefined,
       country: user?.role !== "buyer" ? country : undefined,
@@ -163,6 +167,18 @@ function UserEdit() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </FormControl>
+
+        {user?.role !== "buyer" && (
+          <FormControl fullWidth required>
+            <TextField
+              label="Phone"
+              type="number"
+              variant="outlined"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </FormControl>
+        )}
 
         {user?.role !== "buyer" && (
           <FormControl fullWidth required>
