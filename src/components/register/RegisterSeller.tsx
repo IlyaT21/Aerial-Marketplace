@@ -31,7 +31,7 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
 
     try {
       // Send a POST request to your backend
-      const response = await fetch("http://localhost:5000/api/users/register", {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

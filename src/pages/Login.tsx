@@ -23,7 +23,7 @@ function Login() {
     try {
       // Send login request
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "http://localhost:5000/api/auth/login",
         {
           email: email,
           password: password,
