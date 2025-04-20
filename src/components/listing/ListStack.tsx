@@ -16,24 +16,6 @@ const ListStack: React.FC<ListStackProps> = ({ category }) => {
   const limit = 12;
 
   useEffect(() => {
-    // const fetchProducts = async () => {
-    //   try {
-    //     const endpoint = category
-    //       ? `http://localhost:5000/api/products/category/${category}`
-    //       : "http://localhost:5000/api/products";
-
-    //     console.log(category);
-    //     console.log(endpoint);
-
-    //     const { data } = await axios.get(endpoint);
-    //     console.log("Fetched products:", data);
-
-    //     setProducts(data.products);
-    //   } catch (error) {
-    //     console.error("Error fetching products:", error);
-    //   }
-    // };
-
     const loadFirstPage = async () => {
       try {
         const endpoint = category

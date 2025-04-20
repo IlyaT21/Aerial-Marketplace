@@ -11,6 +11,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useState } from "react";
 import { Box } from "@mui/system";
+import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -20,30 +21,29 @@ function Login() {
   const handleLogin = async () => {
     console.log(email, password);
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      // Send login request
+      const { data } = await axios.post(
+        "http://localhost:5000/api/users/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("token", data.token);
-        window.location.reload();
-      } else {
-        alert(`Login failed: ${data.message}`);
-      }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        // If error is an instance of Error, log the message
-        console.error("An error occurred during login:", error.message);
+      // On success, store token and reload
+      localStorage.setItem("token", data.token);
+      window.location.reload();
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        // If the server responded with a non-2xx status
+        const message = err.response?.data?.message || err.message;
+        alert(`Login failed: ${message}`);
+      } else if (err instanceof Error) {
+        // Other unexpected errors
+        console.error("An error occurred during login:", err.message);
         alert("An error occurred. Please try again.");
       } else {
-        // Handle unexpected error formats
-        console.error("An unexpected error occurred:", error);
+        console.error("Unexpected error:", err);
         alert("An unexpected error occurred. Please try again.");
       }
     }

@@ -9,7 +9,7 @@ const ListingCarousel = ({
   productImage,
   productName,
 }: ListingCarouselProps) => {
-  const imageUrl = `http://localhost:5000/uploads/${productImage}`;
+  const imageUrl = `http://localhost:5000/images/uploads/${productImage}`;
 
   return (
     <Stack
