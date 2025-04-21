@@ -1,18 +1,10 @@
-import {
-  Button,
-  FormControl,
-  TextField,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-} from "@mui/material";
+import { Button, FormControl, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   _id: string;
@@ -41,6 +33,8 @@ function UserEdit() {
 
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<User | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -103,27 +97,12 @@ function UserEdit() {
       alert(`Error updating user: ${error.message}`);
     }
   };
-
-  const [open, setOpen] = useState(false);
-
-  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-    event.preventDefault();
-    setOpen(true);
-  };
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
   return (
     <Stack alignItems="flex-start" spacing={2}>
       <Button
         size="small"
         startIcon={<ArrowBackIosIcon />}
-        onClick={() => setOpen(true)}
+        onClick={() => navigate(-1)}
       >
         Back
       </Button>
@@ -236,30 +215,8 @@ function UserEdit() {
           <Button variant="contained" onClick={handleSubmit}>
             Save Changes
           </Button>
-          <Button variant="contained" color="error">
-            Delete User
-          </Button>
         </Stack>
       </Stack>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Unsaved Changes</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            You have unsaved changes. Do you wish to save them?
-          </DialogContentText>
-          <Stack direction="row" alignItems="center" my={4} gap={4}>
-            <Button variant="contained" color="error" href="/admin-dashboard">
-              Don't save
-            </Button>
-            <Button variant="contained" href="/admin-dashboard">
-              Save changes
-            </Button>
-            <Button variant="outlined" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-          </Stack>
-        </DialogContent>
-      </Dialog>
     </Stack>
   );
 }

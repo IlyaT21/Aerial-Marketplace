@@ -2,6 +2,8 @@ import { Stack, Button, TextField, FormControl } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useState } from "react";
 import { Box } from "@mui/system";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterBuyerProps {
   handleSelectProfile: (type: "buyer" | "seller" | null) => void;
@@ -15,6 +17,8 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const role = "buyer";
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -27,34 +31,32 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
     console.log(password);
 
     try {
-      // Send a POST request to your backend
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        {
           firstName,
           lastName,
           email,
           password,
           role,
-        }),
-      });
+        }
+      );
 
-      // Handle the response
-      if (response.ok) {
-        const data = await response.json();
-        console.log("User registered successfully:", data);
-        alert("User registered successfully!");
+      console.log("User registered successfully:", response.data);
+      alert("User registered successfully!");
+      navigate("/login");
+    } catch (error: any) {
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error("Error registering user:", error.response.data);
+        alert(`Error: ${error.response.data.message}`);
       } else {
-        const errorData = await response.json();
-        console.error("Error registering user:", errorData);
-        alert(`Error: ${errorData.message}`);
+        // Other errors (e.g., network)
+        console.error("Network error:", error.message);
+        alert(
+          "An error occurred while registering the user. Please try again."
+        );
       }
-    } catch (error) {
-      console.error("Network error:", error);
-      alert("An error occurred while registering the user. Please try again.");
     }
   };
 

@@ -26,7 +26,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ product }) => {
             component="img"
             image={
               product?.productImage
-                ? `http://localhost:5000/images/uploads/${product.productImage}`
+                ? `http://localhost:5000/uploads/${product.productImage}`
                 : "/images/placeholder/placeholder.webp"
             }
             alt={product.productName}

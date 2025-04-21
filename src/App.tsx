@@ -38,7 +38,7 @@ function App() {
           <Route path="/helicopters" element={<Helicopters />} />
           <Route path="/planes" element={<Planes />} />
           <Route path="/other" element={<Other />} />
-          <Route path="/listing/:productId" element={<Listing />} />
+          {/* <Route path="/listing/:productId" element={<Listing />} /> */}
           <Route
             path="/login"
             element={
@@ -53,6 +53,14 @@ function App() {
               <PublicRoute>
                 <Register />
               </PublicRoute>
+            }
+          />
+          <Route
+            path="/listing/:productId"
+            element={
+              <AuthGuard roles={["admin", "seller", "buyer"]}>
+                <Listing />
+              </AuthGuard>
             }
           />
           <Route

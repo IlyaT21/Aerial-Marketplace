@@ -110,7 +110,7 @@ function ProductList() {
                       component="img"
                       image={
                         product?.productImage
-                          ? `http://localhost:5000/images/uploads/${product.productImage}`
+                          ? `http://localhost:5000/uploads/${product.productImage}`
                           : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
@@ -150,7 +150,7 @@ function ProductList() {
                         }
                         variant="contained"
                       >
-                        More Details
+                        Edit Product
                       </Button>
                       <Button
                         fullWidth
@@ -197,7 +197,7 @@ function ProductList() {
                       component="img"
                       image={
                         product?.productImage
-                          ? `http://localhost:5000/images/uploads/${product.productImage}`
+                          ? `http://localhost:5000/uploads/${product.productImage}`
                           : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
@@ -237,7 +237,7 @@ function ProductList() {
                         }
                         variant="contained"
                       >
-                        More Details
+                        Edit Product
                       </Button>
                       <Button
                         fullWidth
@@ -284,7 +284,7 @@ function ProductList() {
                       component="img"
                       image={
                         product?.productImage
-                          ? `http://localhost:5000/images/uploads/${product.productImage}`
+                          ? `http://localhost:5000/uploads/${product.productImage}`
                           : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
@@ -324,7 +324,7 @@ function ProductList() {
                         }
                         variant="contained"
                       >
-                        More Details
+                        Edit Product
                       </Button>
                       <Button
                         fullWidth
@@ -371,7 +371,7 @@ function ProductList() {
                       component="img"
                       image={
                         product?.productImage
-                          ? `http://localhost:5000/images/uploads/${product.productImage}`
+                          ? `http://localhost:5000/uploads/${product.productImage}`
                           : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
@@ -411,7 +411,7 @@ function ProductList() {
                         }
                         variant="contained"
                       >
-                        More Details
+                        Edit Product
                       </Button>
                       <Button
                         fullWidth

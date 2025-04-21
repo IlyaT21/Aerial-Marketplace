@@ -3,10 +3,6 @@ import {
   FormControl,
   TextField,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
   MenuItem,
   Select,
   InputLabel,
@@ -17,6 +13,7 @@ import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ProductEdit() {
   const [file, setFile] = useState<File | null>(null);
@@ -41,9 +38,12 @@ function ProductEdit() {
     (_, i) => currentYear - i
   );
 
+  const navigate = useNavigate();
+
   const handleChangeYear = (event: SelectChangeEvent<string>) => {
     setYear(event.target.value);
   };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -62,16 +62,7 @@ function ProductEdit() {
     setCategory(event.target.value);
   };
 
-  const [open, setOpen] = useState(false);
-
-  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-    event.preventDefault();
-    setOpen(true);
-  };
-
   useEffect(() => {
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
     const fetchProduct = async () => {
       try {
         const { data: product } = await axios.get(
@@ -79,7 +70,9 @@ function ProductEdit() {
         );
 
         if (!isLoaded) {
-          setPreview(`http://localhost:5000/uploads/${product.productImage}`);
+          if (product.productImage) {
+            setPreview(`http://localhost:5000/uploads/${product.productImage}`);
+          }
           setProductName(product.productName || "");
           setCategory(product.category || "");
           setProductDescription(product.productDescription || "");
@@ -101,10 +94,6 @@ function ProductEdit() {
     if (productId) {
       fetchProduct();
     }
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
   });
 
   let userId: string | null | undefined = null;
@@ -158,7 +147,7 @@ function ProductEdit() {
       <Button
         size="small"
         startIcon={<ArrowBackIosIcon />}
-        onClick={() => setOpen(true)}
+        onClick={() => navigate(-1)}
       >
         Back
       </Button>
@@ -286,30 +275,8 @@ function ProductEdit() {
           <Button variant="contained" onClick={handleSubmit}>
             Save Changes
           </Button>
-          <Button variant="contained" color="error">
-            Delete User
-          </Button>
         </Stack>
       </Stack>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Unsaved Changes</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            You have unsaved changes. Do you wish to save them?
-          </DialogContentText>
-          <Stack direction="row" alignItems="center" my={4} gap={4}>
-            <Button variant="contained" color="error" href="/admin-dashboard">
-              Don't save
-            </Button>
-            <Button variant="contained" href="/admin-dashboard">
-              Save changes
-            </Button>
-            <Button variant="outlined" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-          </Stack>
-        </DialogContent>
-      </Dialog>
     </Stack>
   );
 }

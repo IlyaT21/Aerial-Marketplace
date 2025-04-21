@@ -75,9 +75,6 @@ function UserList() {
       await axios.delete(
         `http://localhost:5000/api/users/delete/${selectedUser.id}`
       );
-      alert(
-        `User ${selectedUser.firstName} ${selectedUser.lastName} deleted successfully.`
-      );
       setOpen(false);
       setSelectedUser(null);
 
@@ -86,11 +83,14 @@ function UserList() {
       setSellers(data.filter((user: any) => user.role === "seller"));
       setBuyers(data.filter((user: any) => user.role === "buyer"));
       setAdmins(data.filter((user: any) => user.role === "admin"));
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error("Error deleting user:", error.message);
-        alert("Failed to delete user. Please try again.");
-      }
+    } catch (error: any) {
+      console.error("Error deleting user:", error);
+
+      const message =
+        error.response?.data?.message ||
+        "An unexpected error occurred while deleting the user.";
+
+      alert(message);
     }
   };
 

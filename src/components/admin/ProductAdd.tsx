@@ -16,6 +16,7 @@ import { Stack } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 function ProductAdd() {
   const [file, setFile] = useState<File | null>(null);
@@ -102,19 +103,24 @@ function ProductAdd() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/products", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/products",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      const data = await response.json();
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         alert("Product created successfully!");
       } else {
-        alert(`Error: ${data.message}`);
+        alert(`Error: ${response.data.message}`);
       }
     } catch (error: any) {
       console.error("Error submitting product:", error.message);
+      alert("An error occurred while submitting the product.");
     }
   };
 
