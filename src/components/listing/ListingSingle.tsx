@@ -28,15 +28,11 @@ function ListingSingle() {
     }
   }, [productId]);
 
-  useEffect(() => {
-    if (product) {
-      console.log("Updated product:", product);
-    }
-  }, [product]);
-
   if (!product) {
     return <Typography pt={10}>Loading Product...</Typography>;
   }
+
+  console.log(product.sellerId);
 
   const generalInfo = {
     productName: product.productName,

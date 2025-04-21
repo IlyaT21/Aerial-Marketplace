@@ -111,7 +111,7 @@ function ProductList() {
                       image={
                         product?.productImage
                           ? `http://localhost:5000/images/uploads/${product.productImage}`
-                          : "/images/placeholder/drone-placeholder.png"
+                          : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
                       height="250"
@@ -198,7 +198,7 @@ function ProductList() {
                       image={
                         product?.productImage
                           ? `http://localhost:5000/images/uploads/${product.productImage}`
-                          : "/images/placeholder/drone-placeholder.png"
+                          : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
                       height="250"
@@ -285,7 +285,7 @@ function ProductList() {
                       image={
                         product?.productImage
                           ? `http://localhost:5000/images/uploads/${product.productImage}`
-                          : "/images/placeholder/drone-placeholder.png"
+                          : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
                       height="250"
@@ -372,7 +372,7 @@ function ProductList() {
                       image={
                         product?.productImage
                           ? `http://localhost:5000/images/uploads/${product.productImage}`
-                          : "/images/placeholder/drone-placeholder.png"
+                          : "/images/placeholder/placeholder.webp"
                       }
                       alt={product.productName}
                       height="250"

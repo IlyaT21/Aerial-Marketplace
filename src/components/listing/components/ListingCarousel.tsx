@@ -9,7 +9,9 @@ const ListingCarousel = ({
   productImage,
   productName,
 }: ListingCarouselProps) => {
-  const imageUrl = `http://localhost:5000/images/uploads/${productImage}`;
+  const imageUrl = productImage
+    ? `http://localhost:5000/images/uploads/${productImage}`
+    : "/images/placeholder/placeholder.webp";
 
   return (
     <Stack

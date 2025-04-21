@@ -16,6 +16,7 @@ type ListingCardProps = {
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({ product }) => {
+  console.log(product.productImage);
   return (
     <Box>
       <Card elevation={4}>
@@ -26,7 +27,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ product }) => {
             image={
               product?.productImage
                 ? `http://localhost:5000/images/uploads/${product.productImage}`
-                : "/images/placeholder/drone-placeholder.png"
+                : "/images/placeholder/placeholder.webp"
             }
             alt={product.productName}
             height="250"

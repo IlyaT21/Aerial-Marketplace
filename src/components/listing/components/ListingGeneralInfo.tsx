@@ -23,6 +23,8 @@ type GeneralInfoProps = {
 
 function ListingGeneralInfo({ generalInfo }: GeneralInfoProps) {
   const [open, setOpen] = useState(false);
+
+  // console.log(generalInfo);
   return (
     <Stack width={{ xs: "100%", md: "50%" }} pt={4}>
       <Typography

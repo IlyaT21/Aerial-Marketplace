@@ -24,6 +24,8 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
       return;
     }
 
+    console.log(password);
+
     try {
       // Send a POST request to your backend
       const response = await fetch("http://localhost:5000/api/auth/register", {
