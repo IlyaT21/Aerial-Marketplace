@@ -17,6 +17,7 @@ import Drones from "./pages/Drones";
 import Helicopters from "./pages/Helicopters";
 import Planes from "./pages/Planes";
 import Other from "./pages/Other";
+import SellerDashboard from "./pages/SellerDashboard";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -72,9 +73,17 @@ function App() {
             }
           />
           <Route
+            path="/dashboard"
+            element={
+              <AuthGuard roles={["seller"]}>
+                <SellerDashboard />
+              </AuthGuard>
+            }
+          />
+          <Route
             path="/edit-user/:id"
             element={
-              <AuthGuard roles={["admin", "seller"]}>
+              <AuthGuard roles={["admin"]}>
                 <EditUser />
               </AuthGuard>
             }

@@ -83,6 +83,38 @@ function NavMenuMobile({
           >
             Other
           </Button>
+          {userRole === "admin" && (
+            <Button
+              disableRipple
+              href="/admin-dashboard"
+              size="large"
+              color="inherit"
+              sx={{ backgroundColor: "transparent" }}
+            >
+              Admin Dashboard
+            </Button>
+          )}
+          {userRole === "user" && (
+            <Button
+              disableRipple
+              size="large"
+              color="inherit"
+              sx={{ backgroundColor: "transparent" }}
+            >
+              User Profile
+            </Button>
+          )}
+          {userRole === "seller" && (
+            <Button
+              disableRipple
+              href="/dashboard"
+              size="large"
+              color="inherit"
+              sx={{ backgroundColor: "transparent" }}
+            >
+              Dashboard
+            </Button>
+          )}
           {token ? (
             <Button
               disableRipple

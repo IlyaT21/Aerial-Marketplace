@@ -126,15 +126,16 @@ function NavMenuDesktop({
                 </Button>
               </MenuItem>
             )}
-            {userRole === "vendor" && (
+            {userRole === "seller" && (
               <MenuItem>
                 <Button
                   disableRipple
+                  href="/dashboard"
                   size="large"
                   color="inherit"
                   sx={{ backgroundColor: "transparent" }}
                 >
-                  Vendor Panel
+                  Dashboard
                 </Button>
               </MenuItem>
             )}
