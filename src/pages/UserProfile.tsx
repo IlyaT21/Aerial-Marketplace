@@ -1,9 +1,8 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import EditProfile from "../components/buyer/EditProfile";
-import ListStack from "../components/listing/ListStack";
 
-function SellerDashboard() {
+function UserProfile() {
   return (
     <Stack
       direction="column"
@@ -13,12 +12,9 @@ function SellerDashboard() {
       width="100%"
       maxWidth="1400px"
     >
-      <Stack direction="row" justifyContent="space-between" width="100%">
-        <EditProfile />
-        <ListStack></ListStack>
-      </Stack>
+      <EditProfile />
     </Stack>
   );
 }
 
-export default SellerDashboard;
+export default UserProfile;

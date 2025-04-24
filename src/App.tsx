@@ -18,6 +18,7 @@ import Helicopters from "./pages/Helicopters";
 import Planes from "./pages/Planes";
 import Other from "./pages/Other";
 import SellerDashboard from "./pages/SellerDashboard";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -39,7 +40,6 @@ function App() {
           <Route path="/helicopters" element={<Helicopters />} />
           <Route path="/planes" element={<Planes />} />
           <Route path="/other" element={<Other />} />
-          {/* <Route path="/listing/:productId" element={<Listing />} /> */}
           <Route
             path="/login"
             element={
@@ -77,6 +77,14 @@ function App() {
             element={
               <AuthGuard roles={["seller"]}>
                 <SellerDashboard />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/user-profile"
+            element={
+              <AuthGuard roles={["buyer"]}>
+                <UserProfile />
               </AuthGuard>
             }
           />

@@ -94,10 +94,11 @@ function NavMenuMobile({
               Admin Dashboard
             </Button>
           )}
-          {userRole === "user" && (
+          {userRole === "buyer" && (
             <Button
               disableRipple
               size="large"
+              href="/user-profile"
               color="inherit"
               sx={{ backgroundColor: "transparent" }}
             >
