@@ -1,43 +1,36 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Grid2";
-import { Box, Stack } from "@mui/system";
+import { Stack } from "@mui/system";
 import { Button, Typography } from "@mui/material";
 import ListingCard from "../listing/ListingCard";
+import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function SellerListings() {
   const [products, setProducts] = useState<any[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const limit = 12;
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return;
+    }
+
     const loadFirstPage = async () => {
       try {
-        const endpoint = `http://localhost:5000/api/products`;
+        const decodedToken = jwtDecode<{ id: string }>(token);
+        const userId = decodedToken.id;
+
+        const endpoint = `http://localhost:5000/api/products?userId=${userId}`;
         const { data } = await axios.get(endpoint);
         setProducts(data.products);
-        setHasMore(data.products.length === limit);
       } catch (err) {
         console.error(err);
       }
     };
     loadFirstPage();
   }, []);
-
-  const handleLoadMore = async () => {
-    const next = page + 1;
-    try {
-      const endpoint = `http://localhost:5000/api/products`;
-      const { data } = await axios.get(endpoint);
-
-      setProducts((prev) => [...prev, ...data.products]);
-      setHasMore(data.products.length === limit);
-      setPage(next);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   return (
     <Stack
@@ -47,10 +40,24 @@ function SellerListings() {
       width="100%"
       sx={{ maxWidth: "1400px" }}
     >
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="h3" component="h2" gutterBottom>
+          Active Listings
+        </Typography>
+        <Button
+          component={Link}
+          to="/add-product"
+          variant="contained"
+          size="large"
+        >
+          Add Product
+        </Button>
+      </Stack>
+
       <Grid width="100%" container spacing={4}>
         {products.length > 0 ? (
           products.map((product) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product._id}>
+            <Grid size={{ xs: 12, lg: 6 }} key={product._id}>
               <ListingCard product={product} />
             </Grid>
           ))
@@ -58,20 +65,8 @@ function SellerListings() {
           <Typography variant="h6">No products found.</Typography>
         )}
       </Grid>
-      <Box>
-        {hasMore && (
-          <Button
-            sx={{ my: 4 }}
-            size="large"
-            variant="contained"
-            onClick={handleLoadMore}
-          >
-            Load more
-          </Button>
-        )}
-      </Box>
     </Stack>
   );
-};
+}
 
 export default SellerListings;

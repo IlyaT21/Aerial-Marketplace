@@ -1,7 +1,6 @@
 import { Stack } from "@mui/material";
-import React from "react";
 import EditProfile from "../components/buyer/EditProfile";
-import ListStack from "../components/listing/ListStack";
+import SellerListings from "../components/seller/SellerListings";
 
 function SellerDashboard() {
   return (
@@ -14,8 +13,12 @@ function SellerDashboard() {
       maxWidth="1400px"
     >
       <Stack direction="row" justifyContent="space-between" width="100%">
-        <EditProfile />
-        <ListStack></ListStack>
+        <Stack width="40%">
+          <EditProfile />
+        </Stack>
+        <Stack width="60%">
+          <SellerListings />
+        </Stack>
       </Stack>
     </Stack>
   );
