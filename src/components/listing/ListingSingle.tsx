@@ -32,9 +32,9 @@ function ListingSingle() {
     return <Typography pt={10}>Loading Product...</Typography>;
   }
 
-  console.log(product.sellerId);
-
   const generalInfo = {
+    productId: product._id,
+    sellerId: product.sellerId._id,
     productName: product.productName,
     category: product.category,
     description: product.productDescription,

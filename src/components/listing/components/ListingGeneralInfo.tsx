@@ -9,9 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 
 type GeneralInfoProps = {
   generalInfo: {
+    productId: string;
+    sellerId: string;
     productName: string;
     category: string;
     description: string;
@@ -24,7 +28,16 @@ type GeneralInfoProps = {
 function ListingGeneralInfo({ generalInfo }: GeneralInfoProps) {
   const [open, setOpen] = useState(false);
 
-  // console.log(generalInfo);
+  const token = localStorage.getItem("token");
+
+  let userId: string | null = null;
+
+  if (token) {
+    const decodedToken = jwtDecode<{ id: string }>(token);
+    userId = decodedToken.id;
+  }
+
+  console.log(generalInfo.sellerId);
   return (
     <Stack width={{ xs: "100%", md: "50%" }} pt={4}>
       <Typography
@@ -48,9 +61,19 @@ function ListingGeneralInfo({ generalInfo }: GeneralInfoProps) {
         py={8}
       >
         <Typography variant="body1">${generalInfo.price}</Typography>
-        <Button variant="contained" onClick={() => setOpen(true)}>
-          Contact Seller
-        </Button>
+        {generalInfo?.sellerId === userId ? (
+          <Button
+            variant="contained"
+            component={Link}
+            to={`/edit-product/${generalInfo.productId}`}
+          >
+            Edit Product
+          </Button>
+        ) : (
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            Contact Seller
+          </Button>
+        )}
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogTitle>Contact Information</DialogTitle>
           <DialogContent>
