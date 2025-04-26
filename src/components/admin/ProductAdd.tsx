@@ -49,8 +49,6 @@ function ProductAdd() {
       // Create a preview URL for the selected file
       const previewUrl = URL.createObjectURL(selectedFile);
       setPreview(previewUrl);
-
-      console.log("Selected file:", selectedFile);
     }
   };
 
@@ -95,8 +93,6 @@ function ProductAdd() {
     formData.append("condition", condition);
     formData.append("registration", registration);
     formData.append("sellerId", userId!);
-
-    console.log(category);
 
     if (file) {
       formData.append("image", file); // "image" matches multer's field name

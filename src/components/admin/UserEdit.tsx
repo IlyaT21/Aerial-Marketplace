@@ -84,13 +84,7 @@ function UserEdit() {
     };
 
     try {
-      // Send a PUT request to update the user in the backend
-      const { data } = await axios.put(
-        `http://localhost:5000/api/users/${id}`,
-        updatedUser
-      );
-
-      console.log("User updated successfully:", data);
+      await axios.put(`http://localhost:5000/api/users/${id}`, updatedUser);
       alert("User updated successfully!");
     } catch (error: any) {
       console.error("Error updating user:", error.message);

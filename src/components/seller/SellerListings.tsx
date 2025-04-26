@@ -34,13 +34,18 @@ function SellerListings() {
 
   return (
     <Stack
-      paddingLeft={4}
-      paddingRight={4}
+      paddingLeft={{ xs: 0, lg: 4 }}
+      paddingRight={{ xs: 0, lg: 4 }}
       paddingBottom={4}
       width="100%"
       sx={{ maxWidth: "1400px" }}
     >
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack
+        direction={{ xs: "column", lg: "row" }}
+        justifyContent="space-between"
+        alignItems="center"
+        pb={{ xs: 4, lg: 0 }}
+      >
         <Typography variant="h3" component="h2" gutterBottom>
           Active Listings
         </Typography>

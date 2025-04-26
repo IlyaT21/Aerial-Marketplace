@@ -49,8 +49,6 @@ function ProductList() {
       const { data: dataHelicopters } = await axios.get(endpointHelicopters);
       const { data: dataOther } = await axios.get(endpointOther);
 
-      // console.log("Fetched products:", data);
-
       setDrones(dataDrones.products);
       setPlanes(dataPlanes.products);
       setHelicopters(dataHelicopters.products);

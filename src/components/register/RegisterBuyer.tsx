@@ -22,36 +22,27 @@ function RegisterBuyer({ handleSelectProfile }: RegisterBuyerProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Perform form validation here (e.g., check if passwords match)
+    // Perform form validation
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    console.log(password);
-
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-          role,
-        }
-      );
-
-      console.log("User registered successfully:", response.data);
+      await axios.post("http://localhost:5000/api/auth/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+      });
       alert("User registered successfully!");
       navigate("/login");
     } catch (error: any) {
       if (error.response) {
-        // Server responded with a status other than 2xx
         console.error("Error registering user:", error.response.data);
         alert(`Error: ${error.response.data.message}`);
       } else {
-        // Other errors (e.g., network)
         console.error("Network error:", error.message);
         alert(
           "An error occurred while registering the user. Please try again."

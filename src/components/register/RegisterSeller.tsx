@@ -27,30 +27,25 @@ function RegisterSeller({ handleSelectProfile }: RegisterSellerProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Perform form validation here (e.g., check if passwords match)
+    // Perform form validation
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        {
-          firstName,
-          lastName,
-          email,
-          phone,
-          password,
-          role,
-          country,
-          city,
-          address,
-          company,
-        }
-      );
-
-      console.log("User registered successfully:", response.data);
+      await axios.post("http://localhost:5000/api/auth/register", {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        role,
+        country,
+        city,
+        address,
+        company,
+      });
       alert("User registered successfully!");
       navigate("/login");
     } catch (error: any) {

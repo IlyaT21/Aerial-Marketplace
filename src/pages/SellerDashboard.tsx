@@ -12,11 +12,16 @@ function SellerDashboard() {
       width="100%"
       maxWidth="1400px"
     >
-      <Stack direction="row" justifyContent="space-between" width="100%">
-        <Stack width="40%">
+      <Stack
+        direction={{ xs: "column", lg: "row" }}
+        justifyContent="space-between"
+        width="100%"
+        gap={{ xs: 6, lg: 0 }}
+      >
+        <Stack width={{ xs: "100%", lg: "40%" }}>
           <EditProfile />
         </Stack>
-        <Stack width="60%">
+        <Stack width={{ xs: "100%", lg: "60%" }}>
           <SellerListings />
         </Stack>
       </Stack>

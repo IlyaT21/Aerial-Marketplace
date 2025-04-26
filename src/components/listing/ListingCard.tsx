@@ -16,7 +16,6 @@ type ListingCardProps = {
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({ product }) => {
-  console.log(product.productImage);
   return (
     <Box>
       <Card elevation={4}>

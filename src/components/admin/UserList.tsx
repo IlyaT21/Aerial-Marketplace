@@ -56,7 +56,6 @@ function UserList() {
     id: string
   ) => {
     setSelectedUser({ firstName, lastName, id });
-    console.log(selectedUser);
     setOpen(true);
   };
 

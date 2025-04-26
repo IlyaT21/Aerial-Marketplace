@@ -14,8 +14,32 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function ProductEdit() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    function checkUser() {
+      if (!token) return;
+
+      const decodedToken: any = jwtDecode(token);
+      console.log(decodedToken);
+
+      // Check if user is admin or the seller who created the product
+      if (decodedToken.role !== "admin" && decodedToken.id !== sellerId) {
+        navigate("/");
+      }
+
+      if (decodedToken.id !== sellerId) {
+        // navigate("/");
+        console.log(decodedToken.id);
+        console.log(sellerId);
+      }
+    }
+    checkUser();
+  });
+
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [productName, setProductName] = useState("");
@@ -53,8 +77,6 @@ function ProductEdit() {
       // Create a preview URL for the selected file
       const previewUrl = URL.createObjectURL(selectedFile);
       setPreview(previewUrl);
-
-      console.log("Selected file:", selectedFile);
     }
   };
 
@@ -114,14 +136,12 @@ function ProductEdit() {
     formData.append("registration", registration);
     formData.append("sellerId", userId!);
 
-    console.log(category);
-
     if (file) {
-      formData.append("image", file); // "image" matches multer's field name
+      formData.append("image", file);
     }
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:5000/api/products/${productId}`,
         formData,
         {
@@ -132,7 +152,6 @@ function ProductEdit() {
       );
 
       alert("Product updated successfully!");
-      console.log("Updated product:", response.data);
     } catch (error: any) {
       console.error(
         "Error updating product:",

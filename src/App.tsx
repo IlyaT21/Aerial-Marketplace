@@ -10,7 +10,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EditUser from "./pages/EditUser";
 import EditProduct from "./pages/EditProduct";
 import AddProduct from "./pages/AddProduct";
-// import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import AuthGuard from "./AuthGuard";
 import PublicRoute from "./PublicRoute";
 import Drones from "./pages/Drones";
@@ -19,16 +19,31 @@ import Planes from "./pages/Planes";
 import Other from "./pages/Other";
 import SellerDashboard from "./pages/SellerDashboard";
 import UserProfile from "./pages/UserProfile";
+import { useEffect } from "react";
 
 function App() {
   const token = localStorage.getItem("token");
-  if (token) {
-    // console.log("Token found:", token);
-    // const decodedToken = jwtDecode<{ id: string; role: string }>(token);
-    // console.log(decodedToken.role);
-  } else {
-    // console.log("No token found, redirect to login...");
+
+  function scheduleTokenCleanup() {
+    if (!token) return;
+
+    const { exp } = jwtDecode<{ exp: number }>(token);
+    const msLeft = exp * 1000 - Date.now();
+
+    if (msLeft <= 0) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    } else {
+      setTimeout(() => {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }, msLeft);
+    }
   }
+
+  useEffect(() => {
+    scheduleTokenCleanup();
+  });
 
   return (
     <div className="App">

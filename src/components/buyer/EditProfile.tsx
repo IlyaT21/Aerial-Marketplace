@@ -96,12 +96,7 @@ function EditProfile() {
       const decodedToken = jwtDecode<{ id: string }>(token);
       const userId = decodedToken.id;
 
-      const { data } = await axios.put(
-        `http://localhost:5000/api/users/${userId}`,
-        updatedUser
-      );
-
-      console.log("User updated successfully:", data);
+      await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser);
       alert("User updated successfully!");
     } catch (error: any) {
       console.error("Error updating user:", error.message);

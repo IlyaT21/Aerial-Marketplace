@@ -36,8 +36,6 @@ function ListingGeneralInfo({ generalInfo }: GeneralInfoProps) {
     const decodedToken = jwtDecode<{ id: string }>(token);
     userId = decodedToken.id;
   }
-
-  console.log(generalInfo.sellerId);
   return (
     <Stack width={{ xs: "100%", md: "50%" }} pt={4}>
       <Typography

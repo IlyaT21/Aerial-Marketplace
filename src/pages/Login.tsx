@@ -19,9 +19,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
-    console.log(email, password);
     try {
-      // Send login request
       const { data } = await axios.post(
         "http://localhost:5000/api/auth/login",
         {
@@ -30,16 +28,13 @@ function Login() {
         }
       );
 
-      // On success, store token and reload
       localStorage.setItem("token", data.token);
       window.location.reload();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        // If the server responded with a non-2xx status
         const message = err.response?.data?.message || err.message;
         alert(`Login failed: ${message}`);
       } else if (err instanceof Error) {
-        // Other unexpected errors
         console.error("An error occurred during login:", err.message);
         alert("An error occurred. Please try again.");
       } else {

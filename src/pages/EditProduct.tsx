@@ -1,12 +1,12 @@
-import { Stack } from '@mui/material';
-import React from 'react'
-import ProductEdit from '../components/admin/ProductEdit';
+import { Stack } from "@mui/material";
+import React from "react";
+import ProductEdit from "../components/admin/ProductEdit";
 
 function EditProduct() {
-    window.addEventListener("beforeunload", function (event) {
-      event.stopImmediatePropagation();
-    });
-  
+  window.addEventListener("beforeunload", function (event) {
+    event.stopImmediatePropagation();
+  });
+
   return (
     <Stack
       justifyContent={{
@@ -31,4 +31,4 @@ function EditProduct() {
   );
 }
 
-export default EditProduct
+export default EditProduct;
