@@ -33,11 +33,11 @@ function NavMenuMobile({
         <MenuIcon />
       </IconButton>
       <Drawer
-        anchor="right"
+        anchor="left"
         open={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
       >
-        <Stack spacing={4} alignItems="flex-start" my="auto">
+        <Stack spacing={4} alignItems="flex-start" my={4} minWidth="290px">
           <Button
             disableRipple
             href="/"

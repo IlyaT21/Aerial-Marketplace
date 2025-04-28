@@ -20,21 +20,18 @@ function ProductEdit() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
+    // Only allow specific seller and admin to edit the product
     function checkUser() {
       if (!token) return;
 
+      // Wait for sellerId to load
+      if (!sellerId) return;
+
       const decodedToken: any = jwtDecode(token);
-      console.log(decodedToken);
 
       // Check if user is admin or the seller who created the product
       if (decodedToken.role !== "admin" && decodedToken.id !== sellerId) {
         navigate("/");
-      }
-
-      if (decodedToken.id !== sellerId) {
-        // navigate("/");
-        console.log(decodedToken.id);
-        console.log(sellerId);
       }
     }
     checkUser();

@@ -6,7 +6,7 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed" sx={{ top: "auto", bottom: 0 }}>
       <Stack py={{ xs: 2, md: 3 }} sx={{ backgroundColor: "primary.main" }}>
         <Typography variant="body2">
           &copy; {currentYear} Sky Riders. All rights reserved.

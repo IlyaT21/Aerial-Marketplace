@@ -24,7 +24,7 @@ function ListingDetailedInfo({ generalInfo, sellerInfo }: DetailedInfoProps) {
         <AccordionDetails>
           <Stack gap={1}>
             {sellerInfo.map((item, index) => (
-              <>
+              <Stack key={index}>
                 <Divider />
                 <Stack key={index} direction="row" alignItems="center" gap={1}>
                   <Typography variant="body1" textAlign="left">
@@ -32,7 +32,7 @@ function ListingDetailedInfo({ generalInfo, sellerInfo }: DetailedInfoProps) {
                   </Typography>
                   <Typography variant="body2">{item?.value || "/"}</Typography>
                 </Stack>
-              </>
+              </Stack>
             ))}
           </Stack>
         </AccordionDetails>
@@ -44,7 +44,7 @@ function ListingDetailedInfo({ generalInfo, sellerInfo }: DetailedInfoProps) {
         <AccordionDetails>
           <Stack gap={1}>
             {generalInfo.map((item, index) => (
-              <>
+              <Stack key={index}>
                 <Divider />
                 <Stack key={index} direction="row" alignItems="center" gap={1}>
                   <Typography variant="body1" textAlign="left">
@@ -52,7 +52,7 @@ function ListingDetailedInfo({ generalInfo, sellerInfo }: DetailedInfoProps) {
                   </Typography>
                   <Typography variant="body2">{item?.value || "/"}</Typography>
                 </Stack>
-              </>
+              </Stack>
             ))}
           </Stack>
         </AccordionDetails>

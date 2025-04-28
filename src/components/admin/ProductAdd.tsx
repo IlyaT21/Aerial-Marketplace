@@ -17,6 +17,7 @@ import React, { useState, useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ProductAdd() {
   const [file, setFile] = useState<File | null>(null);
@@ -36,6 +37,8 @@ function ProductAdd() {
     { length: currentYear - 1950 + 1 },
     (_, i) => currentYear - i
   );
+
+  const navigate = useNavigate();
 
   const handleChangeYear = (event: SelectChangeEvent<string>) => {
     setYear(event.target.value);
@@ -95,7 +98,7 @@ function ProductAdd() {
     formData.append("sellerId", userId!);
 
     if (file) {
-      formData.append("image", file); // "image" matches multer's field name
+      formData.append("image", file);
     }
 
     try {
@@ -111,6 +114,8 @@ function ProductAdd() {
 
       if (response.status === 200 || response.status === 201) {
         alert("Product created successfully!");
+        navigate("/dashboard");
+
       } else {
         alert(`Error: ${response.data.message}`);
       }
